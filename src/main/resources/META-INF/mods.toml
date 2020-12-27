@@ -1,0 +1,11 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="DBAD v1.1"
+
+[[mods]]
+modId="alchemist"
+version="1.0"
+displayName="Alchemist's Herbs"
+credits="My best friend Cardigan"
+authors="Lucie"
+description="Placeholder text about the mod, if you see this, i fucked up."

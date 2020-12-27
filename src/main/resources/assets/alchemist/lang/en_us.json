@@ -1,0 +1,8 @@
+{
+  "_comment": "Creative Tab",
+  "itemGroup.alchemist": "Alchemist's Herbs",
+
+  "_comment": "Items",
+  "item.alchemist.pouch": "Alchemist's Pouch",
+  "item.alchemist.pestle": "Alchemist's Pestle"
+}
