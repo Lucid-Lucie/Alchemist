@@ -3,7 +3,7 @@ package lucie.alchemist.item;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("alchemist")
-public class AlchemyItems
+public class AlchemicalItems
 {
     @ObjectHolder("pouch")
     public static ItemPouch POUCH;

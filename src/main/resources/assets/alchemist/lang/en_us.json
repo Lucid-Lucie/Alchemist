@@ -2,6 +2,12 @@
   "_comment": "Creative Tab",
   "itemGroup.alchemist": "Alchemist's Herbs",
 
+  "_comment": "Effects",
+  "effect.alchemist.soul_draining": "Soul Draining",
+  "effect.alchemist.life_taking": "Life Taking",
+  "effect.alchemist.cursed_greed": "Cursed Greed",
+  "effect.alchemist.armor_teleportation": "Armor Teleportation",
+
   "_comment": "Items",
   "item.alchemist.pouch": "Alchemist's Pouch",
   "item.alchemist.pestle": "Alchemist's Pestle"
