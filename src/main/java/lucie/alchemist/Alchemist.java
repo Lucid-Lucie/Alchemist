@@ -4,10 +4,13 @@ import lucie.alchemist.effect.EffectArmorTeleportation;
 import lucie.alchemist.effect.EffectCursedGreed;
 import lucie.alchemist.effect.EffectLifeTaking;
 import lucie.alchemist.effect.EffectSoulDraining;
+import lucie.alchemist.item.AlchemicalItems;
+import lucie.alchemist.item.ItemMixture;
 import lucie.alchemist.item.ItemPestle;
 import lucie.alchemist.item.ItemPouch;
 import net.minecraft.item.*;
 import net.minecraft.potion.Effect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,7 +43,7 @@ public class Alchemist
 
     private void clientSetup(final FMLClientSetupEvent event)
     {
-
+        ItemModelsProperties.registerProperty(AlchemicalItems.SOUL_DRAINING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -60,6 +63,8 @@ public class Alchemist
         {
             event.getRegistry().register(new ItemPouch());
             event.getRegistry().register(new ItemPestle());
+
+            event.getRegistry().register(new ItemMixture("soul_draining"));
         }
     }
 }

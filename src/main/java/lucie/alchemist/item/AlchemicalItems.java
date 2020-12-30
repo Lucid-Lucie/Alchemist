@@ -10,4 +10,7 @@ public class AlchemicalItems
 
     @ObjectHolder("pestle")
     public static ItemPestle PESTLE;
+
+    @ObjectHolder("soul_draining_ingredients")
+    public static ItemMixture SOUL_DRAINING;
 }

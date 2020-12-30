@@ -10,5 +10,13 @@
 
   "_comment": "Items",
   "item.alchemist.pouch": "Alchemist's Pouch",
-  "item.alchemist.pestle": "Alchemist's Pestle"
+  "item.alchemist.pestle": "Alchemist's Pestle",
+  "item.alchemist.mixture": "%s Mixture",
+  "item.alchemist.ingredient": "%s Ingredients",
+
+  "_comment": "Tooltip",
+  "tooltip.alchemist.requires": "Requires",
+  "tooltip.alchemist.inflicts": "Inflicts",
+  "tooltip.alchemist.mixtures": "Mixtures",
+  "tooltip.alchemist.info": "Hold 'shift' for info."
 }
