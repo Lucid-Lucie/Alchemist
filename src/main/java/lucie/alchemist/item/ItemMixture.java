@@ -13,7 +13,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -23,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,6 +72,8 @@ public class ItemMixture extends Item
         {
             utility.trim(I18n.format("description.alchemist.ingredients"), 20);
         }
+
+        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
     /* Functions */
@@ -78,13 +82,6 @@ public class ItemMixture extends Item
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn)
     {
-        // TODO: Test code, delete this and implement pestle instead.
-
-        if (!compoundCheck(playerIn.getHeldItem(handIn)))
-        {
-            return new ActionResult<>(ActionResultType.SUCCESS, compoundWrite(playerIn.getHeldItem(handIn), 1, false));
-        }
-
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 

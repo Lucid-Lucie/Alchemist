@@ -1,6 +1,8 @@
 package lucie.alchemist.utility;
 
 import lucie.alchemist.Alchemist;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -29,4 +31,16 @@ public class UtilityGetter
         return new EffectInstance(e, duration, amplifier);
     }
 
+    public static Item getItem(ResourceLocation item)
+    {
+        Item i = ForgeRegistries.ITEMS.getValue(item);
+
+        if (i == null)
+        {
+            Alchemist.LOGGER.error("Item '" + item + "' isn't an item or doesn't exist in registries, returning air.");
+            i = Items.AIR;
+        }
+
+        return i;
+    }
 }

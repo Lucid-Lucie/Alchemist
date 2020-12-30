@@ -3,6 +3,11 @@
   "itemGroup.alchemist.ingredients": "Alchemist's Ingredients",
   "itemGroup.alchemist.mixtures": "Alchemist's Mixtures",
 
+  "_comment": "Enchantments",
+  "enchantment.alchemist.proficiency": "Proficiency",
+  "enchantment.alchemist.mastery": "Mastery",
+  "enchantment.alchemist.knowledge": "Knowledge",
+
   "_comment": "Effects",
   "effect.alchemist.soul_draining": "Soul Draining",
   "effect.alchemist.life_taking": "Life Taking",
