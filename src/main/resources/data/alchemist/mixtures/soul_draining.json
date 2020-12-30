@@ -3,6 +3,6 @@
   "instant": false,
   "soulfire": true,
   "durations": [200, 400, 600],
-  "amplifiers": [1, 2],
+  "amplifiers": [0, 1],
   "uses": [16, 32, 64]
 }

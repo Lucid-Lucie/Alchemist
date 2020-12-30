@@ -7,7 +7,7 @@ public class ItemPestle extends Item
 {
     public ItemPestle()
     {
-        super(new Item.Properties().maxStackSize(1).rarity(Alchemist.RARITY).group(Alchemist.GROUP));
+        super(new Item.Properties().maxStackSize(1).rarity(Alchemist.RARITY).group(Alchemist.GROUP_INGREDIENTS));
         this.setRegistryName("pestle");
     }
 }

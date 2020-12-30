@@ -19,13 +19,7 @@ public class UtilityTooltip
         this.tooltip = tooltip;
     }
 
-    public void color(String text, TextFormatting color)
-    {
-        StringTextComponent component = new StringTextComponent(text);
-        component.setStyle(Style.EMPTY.setFormatting(color));
-        tooltip.add(component);
-    }
-
+    // Gives specified colors to to text.
     public void color(String[] texts, TextFormatting[] formattings)
     {
         if (texts.length != formattings.length)
@@ -47,17 +41,14 @@ public class UtilityTooltip
         tooltip.add(output);
     }
 
+    // Adds empty space to tooltip.
     public void space()
     {
         tooltip.add(new StringTextComponent(""));
     }
 
-    public void clear()
-    {
-        tooltip.clear();
-    }
-
-    private String effect(EffectInstance effect)
+    // Adds effect text with specified color.
+    public void effect(EffectInstance effect, TextFormatting color)
     {
         int seconds, t1, t2, t3;
         String text;
@@ -114,13 +105,42 @@ public class UtilityTooltip
 
         }
 
-        return text;
-    }
-
-    public void effect(EffectInstance effect, TextFormatting color)
-    {
-       StringTextComponent component = new StringTextComponent(" " + effect(effect));
+       StringTextComponent component = new StringTextComponent(" " + text);
        component.setStyle(Style.EMPTY.setFormatting(color));
        tooltip.add(component);
+    }
+
+    // Trims text to specified length.
+    public void trim(String localized, int length)
+    {
+        StringBuilder builder = new StringBuilder(); // String factory
+        Style style = Style.EMPTY.setFormatting(TextFormatting.GRAY).setItalic(true);
+        StringTextComponent s;
+
+        int size = 0;
+
+        for (int i = 0; i < localized.length(); i++)
+        {
+            char c = localized.charAt(i);
+
+            // If the size is greater than specified length, clip the string.
+            if (c == ' ' && size >= length)
+            {
+                s = new StringTextComponent(builder.toString());
+                s.setStyle(style);
+                tooltip.add(s);
+
+                builder = new StringBuilder();
+                size = 0;
+                continue;
+            }
+
+            size += 1;
+            builder.append(c);
+        }
+
+        s = new StringTextComponent(builder.toString());
+        s.setStyle(style);
+        tooltip.add(s);
     }
 }

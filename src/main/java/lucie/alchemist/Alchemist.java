@@ -27,14 +27,25 @@ public class Alchemist
 
     public static final Rarity RARITY = Rarity.create("alchemist", TextFormatting.YELLOW);
 
-    public static final ItemGroup GROUP = new ItemGroup("alchemist")
+    public static final ItemGroup GROUP_INGREDIENTS = new ItemGroup("alchemist.ingredients")
     {
         @Override
         public ItemStack createIcon()
         {
-            return new ItemStack(Items.LEATHER);
+            return new ItemStack(AlchemicalItems.POUCH);
         }
     };
+
+    public static final ItemGroup GROUP_MIXTURES = new ItemGroup("alchemist.mixtures")
+    {
+        @Override
+        public ItemStack createIcon()
+        {
+            return AlchemicalItems.SOUL_DRAINING.compoundWrite(new ItemStack(AlchemicalItems.SOUL_DRAINING), 0, true);
+        }
+    };
+
+
 
     public Alchemist()
     {

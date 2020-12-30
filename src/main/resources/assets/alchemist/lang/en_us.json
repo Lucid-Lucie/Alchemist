@@ -1,6 +1,7 @@
 {
   "_comment": "Creative Tab",
-  "itemGroup.alchemist": "Alchemist's Herbs",
+  "itemGroup.alchemist.ingredients": "Alchemist's Ingredients",
+  "itemGroup.alchemist.mixtures": "Alchemist's Mixtures",
 
   "_comment": "Effects",
   "effect.alchemist.soul_draining": "Soul Draining",
@@ -16,7 +17,8 @@
 
   "_comment": "Tooltip",
   "tooltip.alchemist.requires": "Requires",
-  "tooltip.alchemist.inflicts": "Inflicts",
-  "tooltip.alchemist.mixtures": "Mixtures",
-  "tooltip.alchemist.info": "Hold 'shift' for info."
+  "tooltip.alchemist.info": "Hold 'shift' for info.",
+
+  "_comment": "Description",
+  "description.alchemist.ingredients": "Contents needs to be pulverized with a pestle before it can be used."
 }
