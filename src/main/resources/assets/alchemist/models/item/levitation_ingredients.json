@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "alchemist:item/mixtures/levitation_ingredients"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "mixture": 1
+      },
+      "model": "alchemist:item/levitation_mixture"
+    }
+  ]
+}

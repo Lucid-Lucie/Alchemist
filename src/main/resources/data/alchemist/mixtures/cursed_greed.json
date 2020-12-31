@@ -1,0 +1,7 @@
+{
+  "effect": "alchemist:cursed_greed",
+  "soulfire": true,
+  "durations": [200, 400],
+  "amplifiers": [0, 1],
+  "uses": [32, 64]
+}
