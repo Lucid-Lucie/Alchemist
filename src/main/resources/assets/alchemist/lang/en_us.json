@@ -20,7 +20,7 @@
   "item.alchemist.mixture": "%s Mixture",
   "item.alchemist.ingredient": "%s Ingredients",
   "item.alchemist.stick": "Nourished Stick",
-  "item.alchemist.compost": "Enriched Compost",
+  "item.alchemist.essence": "Nature's Essence",
   "item.alchemist.leather": "Treated Leather",
   "item.alchemist.seeds": "Enriched Seeds",
 
@@ -29,7 +29,7 @@
   "journal.alchemist.page": "pg.%s",
   "journal.alchemist.leather": "This leather seems to have magical properties! Fixed my cardigan in a jiffy!",
   "journal.alchemist.seeds": "These seeds are magical! It' adapts to all types of soils it comes in contact with!",
-  "journal.alchemist.compost": "This compost may not be suitable for farming but it has great magical properties!",
+  "journal.alchemist.essence": "If you listen closely you can hear the whispering voices of the forrest!",
   "journal.alchemist.stick": "I sense a magical aura from this stick as it scratches the right spot on my back!",
   "journal.alchemist.pouch": "A pouch is better than a bottle as they aren't brittle but fluids may be a problem!",
   "journal.alchemist.pestle": "The pestle is a great tool for alchemy but an even greater tool to mash potatoes!",

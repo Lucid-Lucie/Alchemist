@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "alchemist:item/compost"
+    "layer0": "alchemist:item/essence"
   }
 }

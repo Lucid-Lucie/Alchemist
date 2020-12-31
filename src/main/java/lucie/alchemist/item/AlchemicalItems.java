@@ -18,8 +18,8 @@ public class AlchemicalItems
     @ObjectHolder("stick")
     public static ItemIngredient STICK;
 
-    @ObjectHolder("compost")
-    public static ItemIngredient COMPOST;
+    @ObjectHolder("essence")
+    public static ItemIngredient ESSENCE;
 
     @ObjectHolder("leather")
     public static ItemIngredient LEATHER;

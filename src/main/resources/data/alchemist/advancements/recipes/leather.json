@@ -6,12 +6,12 @@
     ]
   },
   "criteria": {
-    "has_compost": {
+    "has_essence": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "alchemist:compost"
+            "item": "alchemist:essence"
           }
         ]
       }
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_compost",
+      "has_essence",
       "has_the_recipe"
     ]
   ]

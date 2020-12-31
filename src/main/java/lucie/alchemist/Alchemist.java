@@ -105,7 +105,7 @@ public class Alchemist
 
             // Ingredients.
             event.getRegistry().register(new ItemIngredient("stick"));
-            event.getRegistry().register(new ItemIngredient("compost"));
+            event.getRegistry().register(new ItemIngredient("essence"));
             event.getRegistry().register(new ItemIngredient("seeds"));
             event.getRegistry().register(new ItemIngredient("leather"));
 
