@@ -1,6 +1,6 @@
 package lucie.alchemist.enchantment;
 
-import lucie.alchemist.feature.FeatureTools;
+import lucie.alchemist.function.FunctionTools;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -53,6 +53,6 @@ public class EnchantmentKnowledge extends Enchantment
     @Override
     public boolean canApply(ItemStack stack)
     {
-        return FeatureTools.getItems().contains(stack.getItem());
+        return FunctionTools.getItems().contains(stack.getItem());
     }
 }

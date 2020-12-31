@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    {
+      "item": "minecraft:fire_coral"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "alchemist:pouch"
+    }
+  ],
+  "result": {
+    "item": "alchemist:life_taking_ingredients"
+  }
+}

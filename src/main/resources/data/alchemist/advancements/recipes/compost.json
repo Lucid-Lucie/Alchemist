@@ -1,0 +1,32 @@
+{
+  "parent": "alchemist:recipes/root",
+  "rewards": {
+    "recipes": [
+      "alchemist:compost"
+    ]
+  },
+  "criteria": {
+    "has_seeds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "alchemist:seeds"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:compost"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_seeds",
+      "has_the_recipe"
+    ]
+  ]
+}

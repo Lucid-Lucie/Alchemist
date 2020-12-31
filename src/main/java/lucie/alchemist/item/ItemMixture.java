@@ -4,13 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import lucie.alchemist.Alchemist;
 import lucie.alchemist.enchantment.AlchemicalEnchantments;
-import lucie.alchemist.feature.FeatureMixture.Mixture;
-import lucie.alchemist.feature.FeatureTools;
+import lucie.alchemist.function.FunctionMixture.Mixture;
+import lucie.alchemist.function.FunctionTools;
 import lucie.alchemist.utility.UtilityGetter;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -78,7 +79,18 @@ public class ItemMixture extends Item
         }
         else
         {
-            utility.trim(I18n.format("description.alchemist.ingredients"), 20);
+            if (Screen.hasShiftDown())
+            {
+                int number = I18n.format("journal.alchemist.mixture").length();
+
+                utility.clear();
+                utility.color(new String[]{I18n.format("journal.alchemist") + " ", I18n.format("journal.alchemist.page", number)}, new TextFormatting[]{TextFormatting.YELLOW, TextFormatting.WHITE});
+                utility.trim("\"" + I18n.format("journal.alchemist.mixture") + "\"", 3);
+            }
+            else
+            {
+                utility.trim(I18n.format("description.alchemist.ingredients"), 3);
+            }
         }
     }
 
@@ -100,7 +112,7 @@ public class ItemMixture extends Item
         if (context.getHand().equals(Hand.MAIN_HAND))
         {
             // Can't have a tool in offhand when removing mixture. (Prevents clumsy people)
-            if (FeatureTools.getItems().contains(hand_left.getItem())) return super.onItemUse(context);
+            if (FunctionTools.getItems().contains(hand_left.getItem())) return super.onItemUse(context);
 
             // Removes mixture and turns off the campfire.
             context.getWorld().setBlockState(context.getPos(), state.with(CampfireBlock.LIT, true));
@@ -111,7 +123,7 @@ public class ItemMixture extends Item
         else
         {
             // Needs left hand to be this and right hand to be tool.
-            if (!hand_left.getItem().equals(this) || !FeatureTools.getItems().contains(hand_right.getItem())) return super.onItemUse(context);
+            if (!hand_left.getItem().equals(this) || !FunctionTools.getItems().contains(hand_right.getItem())) return super.onItemUse(context);
 
             Pouch pouch = Pouch.convert(hand_left);
             Tool tool_primary = Tool.convert(hand_right, true);

@@ -2,6 +2,10 @@ package lucie.alchemist.item;
 
 import lucie.alchemist.Alchemist;
 import lucie.alchemist.enchantment.AlchemicalEnchantments;
+import lucie.alchemist.utility.UtilityTooltip;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -10,9 +14,13 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemPestle extends Item
 {
@@ -20,6 +28,20 @@ public class ItemPestle extends Item
     {
         super(new Item.Properties().maxStackSize(1).rarity(Alchemist.RARITY).group(Alchemist.GROUP_INGREDIENTS).maxDamage(32));
         this.setRegistryName("pestle");
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    {
+        if (Screen.hasShiftDown())
+        {
+            int number = I18n.format("journal.alchemist.pestle").length();
+
+            UtilityTooltip utility = new UtilityTooltip(tooltip);
+            utility.clear();
+            utility.color(new String[]{I18n.format("journal.alchemist") + " ", I18n.format("journal.alchemist.page", number)}, new TextFormatting[]{TextFormatting.YELLOW, TextFormatting.WHITE});
+            utility.trim("\"" + I18n.format("journal.alchemist.pestle") + "\"", 3);
+        }
     }
 
     @Nonnull

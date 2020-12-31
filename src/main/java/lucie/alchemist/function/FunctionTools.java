@@ -1,4 +1,4 @@
-package lucie.alchemist.feature;
+package lucie.alchemist.function;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FeatureTools
+public class FunctionTools
 {
     public static final Usable USABLE = new Gson().fromJson(new JsonParser().parse(new InputStreamReader((Objects.requireNonNull(Usable.class.getClassLoader().getResourceAsStream("data/alchemist/enchantments/knowledge.json"))), StandardCharsets.UTF_8)).toString(), Usable.class);
 

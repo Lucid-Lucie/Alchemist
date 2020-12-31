@@ -32,9 +32,11 @@ public class UtilityTooltip
         tooltip.add(new StringTextComponent(""));
     }
 
-    // Trims text to specified length.
-    public void trim(String localized, int length)
+    // Trims text to specified rows.
+    public void trim(String localized, int rows)
     {
+        rows = localized.length() / rows;
+
         StringBuilder builder = new StringBuilder(); // String factory
         Style style = Style.EMPTY.setFormatting(TextFormatting.GRAY).setItalic(true);
         StringTextComponent s;
@@ -45,8 +47,8 @@ public class UtilityTooltip
         {
             char c = localized.charAt(i);
 
-            // If the size is greater than specified length, clip the string.
-            if (c == ' ' && size >= length)
+            // If the size is greater than specified length / rows, clip the string.
+            if (c == ' ' && size >= rows)
             {
                 s = new StringTextComponent(builder.toString());
                 s.setStyle(style);

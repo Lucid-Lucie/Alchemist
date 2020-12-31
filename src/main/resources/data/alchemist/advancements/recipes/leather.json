@@ -1,0 +1,32 @@
+{
+  "parent": "alchemist:recipes/root",
+  "rewards": {
+    "recipes": [
+      "alchemist:leather"
+    ]
+  },
+  "criteria": {
+    "has_compost": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "alchemist:compost"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:leather"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_compost",
+      "has_the_recipe"
+    ]
+  ]
+}

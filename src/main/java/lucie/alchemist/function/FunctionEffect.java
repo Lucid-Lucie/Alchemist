@@ -1,4 +1,4 @@
-package lucie.alchemist.feature;
+package lucie.alchemist.function;
 
 import lucie.alchemist.utility.UtilityGetter;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 import static lucie.alchemist.utility.UtilityCompound.Tool;
 
 @Mod.EventBusSubscriber(modid = "alchemist")
-public class FeatureEffect
+public class FunctionEffect
 {
     @SubscribeEvent
     public static void tooltip(LivingHurtEvent event)
@@ -26,7 +26,7 @@ public class FeatureEffect
         LivingEntity entity = event.getEntityLiving();
         ItemStack stack = ((LivingEntity) event.getSource().getImmediateSource()).getHeldItem(((LivingEntity) event.getSource().getImmediateSource()).getActiveHand());
 
-        if (!FeatureTools.getItems().contains(stack.getItem())) return;
+        if (!FunctionTools.getItems().contains(stack.getItem())) return;
 
         Tool primary = Tool.convert(stack, true);
         Tool secondary = Tool.convert(stack, false);

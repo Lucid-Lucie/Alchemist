@@ -8,10 +8,7 @@ import lucie.alchemist.enchantment.AlchemicalEnchantments;
 import lucie.alchemist.enchantment.EnchantmentKnowledge;
 import lucie.alchemist.enchantment.EnchantmentMastery;
 import lucie.alchemist.enchantment.EnchantmentProficiency;
-import lucie.alchemist.item.AlchemicalItems;
-import lucie.alchemist.item.ItemMixture;
-import lucie.alchemist.item.ItemPestle;
-import lucie.alchemist.item.ItemPouch;
+import lucie.alchemist.item.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.*;
@@ -102,8 +99,17 @@ public class Alchemist
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event)
         {
+            // Tools.
             event.getRegistry().register(new ItemPouch());
             event.getRegistry().register(new ItemPestle());
+
+            // Ingredients.
+            event.getRegistry().register(new ItemIngredient("stick"));
+            event.getRegistry().register(new ItemIngredient("compost"));
+            event.getRegistry().register(new ItemIngredient("seeds"));
+            event.getRegistry().register(new ItemIngredient("leather"));
+
+            // Mixtures.
             event.getRegistry().register(new ItemMixture("slowness"));
             event.getRegistry().register(new ItemMixture("armor_teleportation"));
             event.getRegistry().register(new ItemMixture("levitation"));

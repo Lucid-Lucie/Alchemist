@@ -5,11 +5,29 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder("alchemist")
 public class AlchemicalItems
 {
+    /* Tools */
+
     @ObjectHolder("pouch")
     public static ItemPouch POUCH;
 
     @ObjectHolder("pestle")
     public static ItemPestle PESTLE;
+
+    /* Ingredients */
+
+    @ObjectHolder("stick")
+    public static ItemIngredient STICK;
+
+    @ObjectHolder("compost")
+    public static ItemIngredient COMPOST;
+
+    @ObjectHolder("leather")
+    public static ItemIngredient LEATHER;
+
+    @ObjectHolder("seeds")
+    public static ItemIngredient SEEDS;
+
+    /* Mixtures */
 
     @ObjectHolder("slowness_ingredients")
     public static ItemMixture SLOWNESS;

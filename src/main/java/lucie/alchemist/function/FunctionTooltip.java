@@ -1,4 +1,4 @@
-package lucie.alchemist.feature;
+package lucie.alchemist.function;
 
 import lucie.alchemist.utility.UtilityCompound;
 import lucie.alchemist.utility.UtilityGetter;
@@ -13,7 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = "alchemist")
-public class FeatureTooltip
+public class FunctionTooltip
 {
     @SubscribeEvent
     public static void tooltip(ItemTooltipEvent event)
@@ -21,7 +21,7 @@ public class FeatureTooltip
         ItemStack stack = event.getItemStack();
 
         // Stack need to be correct tool.
-        if (!FeatureTools.getItems().contains(stack.getItem())) return;
+        if (!FunctionTools.getItems().contains(stack.getItem())) return;
 
         // Using tools instead of long ass lines.
         UtilityTooltip tooltip = new UtilityTooltip(event.getToolTip());

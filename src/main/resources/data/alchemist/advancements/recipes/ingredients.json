@@ -1,0 +1,72 @@
+{
+  "parent": "alchemist:recipes/root",
+  "rewards": {
+    "recipes": [
+      "alchemist:ingredients_levitation",
+      "alchemist:ingredients_slowness",
+      "alchemist:ingredients_life_taking",
+      "alchemist:ingredients_cursed_greed",
+      "alchemist:ingredients_armor_teleportation",
+      "alchemist:ingredients_soul_draining"
+    ]
+  },
+  "criteria": {
+    "has_pouch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "alchemist:pouch"
+          }
+        ]
+      }
+    },
+    "has_levitation": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:ingredients_levitation"
+      }
+    },
+    "has_slowness": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:ingredients_slowness"
+      }
+    },
+    "has_life_taking": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:ingredients_life_taking"
+      }
+    },
+    "has_cursed_greed": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:ingredients_cursed_greed"
+      }
+    },
+    "has_armor_teleportation": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:ingredients_armor_teleportation"
+      }
+    },
+    "has_soul_draining": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alchemist:ingredients_soul_draining"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_pouch",
+      "has_levitation",
+      "has_slowness",
+      "has_life_taking",
+      "has_cursed_greed",
+      "has_armor_teleportation",
+      "has_soul_draining"
+    ]
+  ]
+}

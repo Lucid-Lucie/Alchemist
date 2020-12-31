@@ -1,8 +1,8 @@
-package lucie.alchemist.feature;
+package lucie.alchemist.function;
 
 import net.minecraft.util.ResourceLocation;
 
-public class FeatureMixture
+public class FunctionMixture
 {
     public static class Mixture
     {
