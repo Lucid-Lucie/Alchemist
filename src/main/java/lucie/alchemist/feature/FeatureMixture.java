@@ -30,11 +30,6 @@ public class FeatureMixture
             return effect;
         }
 
-        public boolean isInstant()
-        {
-            return instant;
-        }
-
         public boolean isSoulfire()
         {
             return soulfire;

@@ -1,6 +1,5 @@
 {
   "effect": "alchemist:soul_draining",
-  "instant": false,
   "soulfire": true,
   "durations": [200, 400, 600],
   "amplifiers": [0, 1],

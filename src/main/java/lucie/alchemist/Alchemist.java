@@ -74,6 +74,7 @@ public class Alchemist
     private void clientSetup(final FMLClientSetupEvent event)
     {
         ItemModelsProperties.registerProperty(AlchemicalItems.SOUL_DRAINING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(AlchemicalItems.LIFE_TAKING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -102,6 +103,7 @@ public class Alchemist
             event.getRegistry().register(new ItemPouch());
             event.getRegistry().register(new ItemPestle());
             event.getRegistry().register(new ItemMixture("soul_draining"));
+            event.getRegistry().register(new ItemMixture("life_taking"));
         }
     }
 }

@@ -13,4 +13,7 @@ public class AlchemicalItems
 
     @ObjectHolder("soul_draining_ingredients")
     public static ItemMixture SOUL_DRAINING;
+
+    @ObjectHolder("life_taking_ingredients")
+    public static ItemMixture LIFE_TAKING;
 }

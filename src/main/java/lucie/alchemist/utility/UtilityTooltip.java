@@ -3,6 +3,7 @@ package lucie.alchemist.utility;
 import lucie.alchemist.Alchemist;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
@@ -17,6 +18,52 @@ public class UtilityTooltip
     public UtilityTooltip(List<ITextComponent> tooltip)
     {
         this.tooltip = tooltip;
+    }
+
+    // Clears tooltip.
+    public void clear()
+    {
+        tooltip.clear();
+    }
+
+    // Adds empty space to tooltip.
+    public void space()
+    {
+        tooltip.add(new StringTextComponent(""));
+    }
+
+    // Trims text to specified length.
+    public void trim(String localized, int length)
+    {
+        StringBuilder builder = new StringBuilder(); // String factory
+        Style style = Style.EMPTY.setFormatting(TextFormatting.GRAY).setItalic(true);
+        StringTextComponent s;
+
+        int size = 0;
+
+        for (int i = 0; i < localized.length(); i++)
+        {
+            char c = localized.charAt(i);
+
+            // If the size is greater than specified length, clip the string.
+            if (c == ' ' && size >= length)
+            {
+                s = new StringTextComponent(builder.toString());
+                s.setStyle(style);
+                tooltip.add(s);
+
+                builder = new StringBuilder();
+                size = 0;
+                continue;
+            }
+
+            size += 1;
+            builder.append(c);
+        }
+
+        s = new StringTextComponent(builder.toString());
+        s.setStyle(style);
+        tooltip.add(s);
     }
 
     // Gives specified colors to to text.
@@ -39,12 +86,6 @@ public class UtilityTooltip
         }
 
         tooltip.add(output);
-    }
-
-    // Adds empty space to tooltip.
-    public void space()
-    {
-        tooltip.add(new StringTextComponent(""));
     }
 
     // Adds effect text with specified color.
@@ -110,37 +151,11 @@ public class UtilityTooltip
        tooltip.add(component);
     }
 
-    // Trims text to specified length.
-    public void trim(String localized, int length)
+    // Adds mixture tooltip.
+    public void mixture(EffectInstance effect, int uses, ResourceLocation location, TextFormatting primary, TextFormatting secondary)
     {
-        StringBuilder builder = new StringBuilder(); // String factory
-        Style style = Style.EMPTY.setFormatting(TextFormatting.GRAY).setItalic(true);
-        StringTextComponent s;
-
-        int size = 0;
-
-        for (int i = 0; i < localized.length(); i++)
-        {
-            char c = localized.charAt(i);
-
-            // If the size is greater than specified length, clip the string.
-            if (c == ' ' && size >= length)
-            {
-                s = new StringTextComponent(builder.toString());
-                s.setStyle(style);
-                tooltip.add(s);
-
-                builder = new StringBuilder();
-                size = 0;
-                continue;
-            }
-
-            size += 1;
-            builder.append(c);
-        }
-
-        s = new StringTextComponent(builder.toString());
-        s.setStyle(style);
-        tooltip.add(s);
+        color(new String[]{I18n.format("item.alchemist.mixture", I18n.format("effect." + location.getNamespace() + "." + location.getPath())) + ": ", "[", String.valueOf(uses), "]"}, new TextFormatting[]{primary, TextFormatting.GRAY, TextFormatting.WHITE, TextFormatting.GRAY});
+        effect(effect, secondary);
     }
+
 }

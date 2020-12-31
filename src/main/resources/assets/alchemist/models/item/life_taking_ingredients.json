@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "alchemist:item/mixtures/life_taking_ingredients"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "mixture": 1
+      },
+      "model": "alchemist:item/life_taking_mixture"
+    }
+  ]
+}

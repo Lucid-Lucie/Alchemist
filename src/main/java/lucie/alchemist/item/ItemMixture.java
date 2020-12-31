@@ -3,17 +3,23 @@ package lucie.alchemist.item;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import lucie.alchemist.Alchemist;
+import lucie.alchemist.enchantment.AlchemicalEnchantments;
 import lucie.alchemist.feature.FeatureMixture.Mixture;
+import lucie.alchemist.feature.FeatureTools;
 import lucie.alchemist.utility.UtilityGetter;
 import lucie.alchemist.utility.UtilityTooltip;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +34,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
+
+import static lucie.alchemist.utility.UtilityCompound.Pouch;
+import static lucie.alchemist.utility.UtilityCompound.Tool;
 
 public class ItemMixture extends Item
 {
@@ -54,35 +63,81 @@ public class ItemMixture extends Item
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         UtilityTooltip utility = new UtilityTooltip(tooltip);
+        Pouch pouch = Pouch.convert(stack);
 
-        // Mixture
-        if (compoundCheck(stack))
+        // Check if compound exist
+        if (pouch.doesExist())
         {
-            // Compound is checked by "compoundCheck"
-            if (stack.getTag() == null) return;
-            String campfire = stack.getTag().getCompound("mixture").getBoolean("soulfire") ? "block.minecraft.soul_campfire" : "block.minecraft.campfire";
+            String campfire = pouch.isSoulfire() ? "soul_campfire" : "campfire";
 
             // Put info on tooltip
-            utility.color(new String[]{I18n.format("tooltip.alchemist.requires") + ": ", I18n.format(campfire)}, new TextFormatting[]{TextFormatting.GRAY, TextFormatting.WHITE});
+            utility.color(new String[]{I18n.format("tooltip.alchemist.requires") + ": ", I18n.format("block.minecraft." + campfire)}, new TextFormatting[]{TextFormatting.GRAY, TextFormatting.WHITE});
             utility.space();
-            utility.color(new String[]{I18n.format("potion.whenDrank")+ " ", "[", String.valueOf(stack.getTag().getCompound("mixture").getInt("uses")),"]"}, new TextFormatting[]{this.getRarity(stack).color, TextFormatting.GRAY, TextFormatting.WHITE, TextFormatting.GRAY});
-            utility.effect(UtilityGetter.getEffectInstance(new ResourceLocation(stack.getTag().getCompound("mixture").getString("effect")), stack.getTag().getCompound("mixture").getInt("duration"), stack.getTag().getCompound("mixture").getInt("amplifier")), TextFormatting.WHITE);
+            utility.color(new String[]{I18n.format("potion.whenDrank")+ " ", "[", String.valueOf(pouch.getUses()),"]"}, new TextFormatting[]{this.getRarity(stack).color, TextFormatting.GRAY, TextFormatting.WHITE, TextFormatting.GRAY});
+            utility.effect(UtilityGetter.getEffectInstance(new ResourceLocation(pouch.getEffect()), pouch.getDuration(), pouch.getAmplifier()), TextFormatting.WHITE);
         }
-        else // Ingredient
+        else
         {
             utility.trim(I18n.format("description.alchemist.ingredients"), 20);
         }
-
-        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
     /* Functions */
 
-    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn)
+    public ActionResultType onItemUse(ItemUseContext context)
     {
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        if (context.getPlayer() == null) return super.onItemUse(context);
+
+        ItemStack hand_right = context.getPlayer().getHeldItem(Hand.MAIN_HAND);
+        ItemStack hand_left = context.getPlayer().getHeldItem(Hand.OFF_HAND);
+        BlockState state = context.getWorld().getBlockState(context.getPos());
+
+        // Needs block to be campfire and campfire to be lit.
+        if ((!state.getBlock().equals(Blocks.CAMPFIRE) && !state.getBlock().equals(Blocks.SOUL_CAMPFIRE)) || !state.get(CampfireBlock.LIT)) return super.onItemUse(context);
+
+        // Main hand is used to remove mixture, offhand is used to apply mixture.
+        if (context.getHand().equals(Hand.MAIN_HAND))
+        {
+            // Can't have a tool in offhand when removing mixture. (Prevents clumsy people)
+            if (FeatureTools.getItems().contains(hand_left.getItem())) return super.onItemUse(context);
+
+            // Removes mixture and turns off the campfire.
+            context.getWorld().setBlockState(context.getPos(), state.with(CampfireBlock.LIT, true));
+            context.getPlayer().setHeldItem(Hand.MAIN_HAND, new ItemStack(AlchemicalItems.POUCH));
+
+            return ActionResultType.SUCCESS;
+        }
+        else
+        {
+            // Needs left hand to be this and right hand to be tool.
+            if (!hand_left.getItem().equals(this) || !FeatureTools.getItems().contains(hand_right.getItem())) return super.onItemUse(context);
+
+            Pouch pouch = Pouch.convert(hand_left);
+            Tool tool_primary = Tool.convert(hand_right, true);
+            Tool tool_secondary = Tool.convert(hand_right, false);
+
+            // Pouch needs to be ready.
+            if (!pouch.doesExist()) return super.onItemUse(context);
+
+            // Check if soulfire is needed.
+            if (pouch.isSoulfire() && !state.getBlock().equals(Blocks.SOUL_CAMPFIRE)) return super.onItemUse(context);
+
+            // Tool needs to be able to put on a new mixture
+            if (tool_primary.getUses() != 0 && (tool_secondary.getUses() != 0 || EnchantmentHelper.getEnchantmentLevel(AlchemicalEnchantments.KNOWLEDGE, hand_right) == 0)) return super.onItemUse(context);
+
+            // Tool can't have same mixtures.
+            if ((pouch.getEffect().equals(tool_primary.getEffect()) && tool_primary.getUses() > 0) || (pouch.getEffect().equals(tool_secondary.getEffect()) && tool_secondary.getUses() > 0)) return super.onItemUse(context);
+
+            // Make campfire unlit, add mixture to tool, empty pouch.
+            context.getWorld().setBlockState(context.getPos(), state.with(CampfireBlock.LIT, false));
+            context.getPlayer().setHeldItem(Hand.MAIN_HAND, compoundInject(hand_left, hand_right));
+            context.getPlayer().setHeldItem(Hand.OFF_HAND, new ItemStack(AlchemicalItems.POUCH));
+
+            Alchemist.LOGGER.debug(context.getPlayer().getHeldItem(Hand.MAIN_HAND).getTag());
+
+            return ActionResultType.SUCCESS;
+        }
     }
 
     @Override
@@ -138,7 +193,6 @@ public class ItemMixture extends Item
         // Bake the big fucking compound.
         nbt.putInt("duration", duration);
         nbt.putString("effect", mixture.getEffect());
-        nbt.putBoolean("instant", mixture.isInstant());
         nbt.putBoolean("soulfire", mixture.isSoulfire());
         nbt.putInt("amplifier", amplifier);
         nbt.putInt("uses", uses);
@@ -148,6 +202,38 @@ public class ItemMixture extends Item
         stack.getTag().put("mixture", nbt);
 
         return stack;
+    }
+
+    public ItemStack compoundInject(ItemStack mixture, ItemStack tool)
+    {
+        // Knowledge gives an extra slot to put mixtures in.
+        boolean hasKnowledge = EnchantmentHelper.getEnchantmentLevel(AlchemicalEnchantments.KNOWLEDGE, tool) > 0;
+
+        Pouch pouch = Pouch.convert(mixture);
+        Tool tool_primary = Tool.convert(tool, true);
+
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.putInt("uses", pouch.getUses());
+        nbt.putInt("duration", pouch.getDuration());
+        nbt.putInt("amplifier", pouch.getAmplifier());
+        nbt.putString("effect", pouch.getEffect());
+
+        if (tool.getTag() == null) tool.setTag(new CompoundNBT());
+
+        // Add mixture to primary if it hasn't any.
+        if (!tool_primary.doesExist() || tool_primary.getUses() == 0)
+        {
+            if (!tool.getTag().contains("mixture")) tool.getTag().put("mixture", new CompoundNBT());
+
+            tool.getTag().getCompound("mixture").put("primary", nbt);
+        }
+        else if (hasKnowledge)
+        {
+            // Add mixture on secondary.
+            tool.getTag().getCompound("mixture").put("secondary", nbt);
+        }
+
+        return tool;
     }
 
     public static boolean compoundCheck(ItemStack stack)
