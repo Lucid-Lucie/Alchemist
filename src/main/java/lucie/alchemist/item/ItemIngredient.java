@@ -68,6 +68,7 @@ public class ItemIngredient extends Item
                     context.getWorld().setBlockState(context.getPos().up(), flora.get(random.nextInt(flora.size())).getDefaultState());
                 }
 
+                context.getItem().shrink(1);
                 context.getWorld().playSound(null, context.getPos(), SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
                 return ActionResultType.SUCCESS;
@@ -90,6 +91,7 @@ public class ItemIngredient extends Item
                     context.getWorld().setBlockState(context.getPos().up(), flora.getDefaultState());
                 }
 
+                context.getItem().shrink(1);
                 context.getWorld().playSound(null, context.getPos(), SoundEvents.BLOCK_NYLIUM_PLACE, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
                 return ActionResultType.SUCCESS;
