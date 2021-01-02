@@ -8,17 +8,19 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.DamageSource;
 
-public class EffectCursedGreed extends Effect
+public class EffectThieving extends Effect
 {
-    public EffectCursedGreed()
+    public EffectThieving()
     {
         super(EffectType.HARMFUL, 0xedc835);
-        this.setRegistryName("cursed_greed");
+        setRegistryName("thieving");
     }
 
     @Override
     public void performEffect(LivingEntity entityLivingBaseIn, int amplifier)
     {
+        // TODO: Redo
+
         if (!entityLivingBaseIn.getEntityWorld().isRemote)
         {
             ItemEntity item = new ItemEntity(entityLivingBaseIn.getEntityWorld(), entityLivingBaseIn.getPosX(), entityLivingBaseIn.getPosY(), entityLivingBaseIn.getPosZ(), new ItemStack(Items.EMERALD));

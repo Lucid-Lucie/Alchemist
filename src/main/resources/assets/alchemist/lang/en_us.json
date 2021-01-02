@@ -11,8 +11,8 @@
   "_comment": "Effects",
   "effect.alchemist.soul_draining": "Soul Draining",
   "effect.alchemist.life_taking": "Life Taking",
-  "effect.alchemist.cursed_greed": "Cursed Greed",
-  "effect.alchemist.armor_teleportation": "Armor Teleportation",
+  "effect.alchemist.thieving": "Thieving",
+  "effect.alchemist.displacement": "Displacement",
 
   "_comment": "Items",
   "item.alchemist.pouch": "Alchemist's Pouch",

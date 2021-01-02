@@ -6,6 +6,7 @@ import net.minecraft.potion.EffectType;
 import net.minecraft.potion.InstantEffect;
 import net.minecraft.util.DamageSource;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EffectLifeTaking extends InstantEffect
@@ -13,7 +14,7 @@ public class EffectLifeTaking extends InstantEffect
     public EffectLifeTaking()
     {
         super(EffectType.HARMFUL, 0xd2443f);
-        this.setRegistryName("life_taking");
+        setRegistryName("life_taking");
     }
 
     @Override
@@ -23,7 +24,7 @@ public class EffectLifeTaking extends InstantEffect
     }
 
     @Override
-    public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, LivingEntity entityLivingBaseIn, int amplifier, double health)
+    public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, @Nonnull LivingEntity entityLivingBaseIn, int amplifier, double health)
     {
         int j = (int)(health * (double)(6 << amplifier) + 0.5D);
 

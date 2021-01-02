@@ -1,14 +1,14 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "alchemist:item/mixtures/armor_teleportation_ingredients"
+    "layer0": "alchemist:item/mixtures/thieving_ingredients"
   },
   "overrides": [
     {
       "predicate": {
         "mixture": 1
       },
-      "model": "alchemist:item/armor_teleportation_mixture"
+      "model": "alchemist:item/thieving_mixture"
     }
   ]
 }

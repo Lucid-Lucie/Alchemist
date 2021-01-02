@@ -39,16 +39,16 @@
         "recipe": "alchemist:ingredients_life_taking"
       }
     },
-    "has_cursed_greed": {
+    "has_thieving": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "alchemist:ingredients_cursed_greed"
+        "recipe": "alchemist:ingredients_thieving"
       }
     },
-    "has_armor_teleportation": {
+    "has_displacement": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "alchemist:ingredients_armor_teleportation"
+        "recipe": "alchemist:ingredients_displacement"
       }
     },
     "has_soul_draining": {
@@ -64,8 +64,8 @@
       "has_levitation",
       "has_slowness",
       "has_life_taking",
-      "has_cursed_greed",
-      "has_armor_teleportation",
+      "has_thieving",
+      "has_displacement",
       "has_soul_draining"
     ]
   ]

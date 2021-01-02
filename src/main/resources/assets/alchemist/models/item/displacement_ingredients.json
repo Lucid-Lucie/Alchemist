@@ -1,14 +1,14 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "alchemist:item/mixtures/cursed_greed_ingredients"
+    "layer0": "alchemist:item/mixtures/displacement_ingredients"
   },
   "overrides": [
     {
       "predicate": {
         "mixture": 1
       },
-      "model": "alchemist:item/cursed_greed_mixture"
+      "model": "alchemist:item/displacement_mixture"
     }
   ]
 }

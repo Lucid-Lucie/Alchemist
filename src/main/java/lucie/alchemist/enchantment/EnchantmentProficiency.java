@@ -11,7 +11,7 @@ public class EnchantmentProficiency extends Enchantment
     public EnchantmentProficiency()
     {
         super(Rarity.UNCOMMON, EnchantmentType.create("proficiency", item -> item.equals(AlchemicalItems.PESTLE)), new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
-        this.setRegistryName("proficiency");
+        setRegistryName("proficiency");
     }
 
     @Override

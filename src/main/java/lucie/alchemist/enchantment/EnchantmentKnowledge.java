@@ -11,7 +11,7 @@ public class EnchantmentKnowledge extends Enchantment
     public EnchantmentKnowledge()
     {
         super(Rarity.VERY_RARE, EnchantmentType.create("knowledge", null), new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
-        this.setRegistryName("knowledge");
+        setRegistryName("knowledge");
     }
 
     @Override

@@ -32,14 +32,14 @@ public class AlchemicalItems
     @ObjectHolder("slowness_ingredients")
     public static ItemMixture SLOWNESS;
 
-    @ObjectHolder("armor_teleportation_ingredients")
-    public static ItemMixture ARMOR_TELEPORTATION;
+    @ObjectHolder("displacement_ingredients")
+    public static ItemMixture DISPLACEMENT;
 
     @ObjectHolder("levitation_ingredients")
     public static ItemMixture LEVITATION;
 
-    @ObjectHolder("cursed_greed_ingredients")
-    public static ItemMixture CURSED_GREED;
+    @ObjectHolder("thieving_ingredients")
+    public static ItemMixture THIEVING;
 
     @ObjectHolder("soul_draining_ingredients")
     public static ItemMixture SOUL_DRAINING;

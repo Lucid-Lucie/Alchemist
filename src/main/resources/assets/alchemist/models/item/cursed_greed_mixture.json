@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "alchemist:item/mixtures/cursed_greed_mixture"
-  }
-}

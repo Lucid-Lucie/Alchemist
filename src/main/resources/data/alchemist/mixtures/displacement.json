@@ -1,6 +1,5 @@
 {
-  "effect": "alchemist:armor_teleportation",
-  "soulfire": true,
+  "effect": "alchemist:displacement",
   "durations": [1],
   "amplifiers": [0, 1, 2],
   "uses": [16, 32]

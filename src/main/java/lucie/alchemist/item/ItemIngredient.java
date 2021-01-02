@@ -17,6 +17,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class ItemIngredient extends Item
     public ItemIngredient(String name)
     {
         super(new Item.Properties().rarity(Alchemist.RARITY).group(Alchemist.GROUP_INGREDIENTS));
-        this.setRegistryName(name);
+        setRegistryName(name);
         this.name = name;
     }
 
@@ -47,10 +48,11 @@ public class ItemIngredient extends Item
         }
     }
 
+    @Nonnull
     @Override
     public ActionResultType onItemUse(ItemUseContext context)
     {
-        if (this.equals(AlchemicalItems.SEEDS) && !context.getWorld().isRemote)
+        if (equals(AlchemicalItems.SEEDS) && !context.getWorld().isRemote)
         {
             Block ground = context.getWorld().getBlockState(context.getPos()).getBlock();
             Block above = context.getWorld().getBlockState(context.getPos().up()).getBlock();

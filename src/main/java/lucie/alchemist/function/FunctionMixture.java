@@ -7,14 +7,13 @@ public class FunctionMixture
     public static class Mixture
     {
         String effect;
-        boolean instant, soulfire;
+        boolean instant;
         int[] durations, amplifiers, uses;
 
-        public Mixture(String effect, boolean instant, boolean soulfire, int[] durations, int[] amplifiers, int[] uses)
+        public Mixture(String effect, boolean instant, int[] durations, int[] amplifiers, int[] uses)
         {
             this.effect = effect;
             this.instant = instant;
-            this.soulfire = soulfire;
             this.durations = durations;
             this.amplifiers = amplifiers;
             this.uses = uses;
@@ -28,11 +27,6 @@ public class FunctionMixture
         public String getEffect()
         {
             return effect;
-        }
-
-        public boolean isSoulfire()
-        {
-            return soulfire;
         }
 
         public int[] getDurations()

@@ -1,6 +1,5 @@
 {
   "effect": "minecraft:slowness",
-  "soulfire": false,
   "durations": [200, 400],
   "amplifiers": [1, 2, 3],
   "uses": [32, 64]

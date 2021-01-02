@@ -27,7 +27,7 @@ public class ItemPestle extends Item
     public ItemPestle()
     {
         super(new Item.Properties().maxStackSize(1).rarity(Alchemist.RARITY).group(Alchemist.GROUP_INGREDIENTS).maxDamage(32));
-        this.setRegistryName("pestle");
+        setRegistryName("pestle");
     }
 
     @Override

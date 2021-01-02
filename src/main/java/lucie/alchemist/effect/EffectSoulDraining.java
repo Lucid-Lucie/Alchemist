@@ -10,7 +10,7 @@ public class EffectSoulDraining extends Effect
     public EffectSoulDraining()
     {
         super(EffectType.HARMFUL, 0x7cf2f5);
-        this.setRegistryName("soul_draining");
+        setRegistryName("soul_draining");
     }
 
     @Override

@@ -1,7 +1,7 @@
 package lucie.alchemist;
 
-import lucie.alchemist.effect.EffectArmorTeleportation;
-import lucie.alchemist.effect.EffectCursedGreed;
+import lucie.alchemist.effect.EffectDisplacement;
+import lucie.alchemist.effect.EffectThieving;
 import lucie.alchemist.effect.EffectLifeTaking;
 import lucie.alchemist.effect.EffectSoulDraining;
 import lucie.alchemist.enchantment.AlchemicalEnchantments;
@@ -24,6 +24,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
+
 @Mod("alchemist")
 public class Alchemist
 {
@@ -33,6 +35,7 @@ public class Alchemist
 
     public static final ItemGroup GROUP_INGREDIENTS = new ItemGroup("alchemist.ingredients")
     {
+        @Nonnull
         @Override
         public ItemStack createIcon()
         {
@@ -40,7 +43,7 @@ public class Alchemist
         }
 
         @Override
-        public void fill(NonNullList<ItemStack> items)
+        public void fill(@Nonnull NonNullList<ItemStack> items)
         {
             super.fill(items);
 
@@ -52,15 +55,6 @@ public class Alchemist
         }
     };
 
-    public static final ItemGroup GROUP_MIXTURES = new ItemGroup("alchemist.mixtures")
-    {
-        @Override
-        public ItemStack createIcon()
-        {
-            return AlchemicalItems.SOUL_DRAINING.compoundWrite(new ItemStack(AlchemicalItems.LIFE_TAKING), 0, true);
-        }
-    };
-
     public Alchemist()
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
@@ -69,9 +63,9 @@ public class Alchemist
     private void clientSetup(final FMLClientSetupEvent event)
     {
         ItemModelsProperties.registerProperty(AlchemicalItems.SLOWNESS, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-        ItemModelsProperties.registerProperty(AlchemicalItems.ARMOR_TELEPORTATION, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(AlchemicalItems.DISPLACEMENT, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
         ItemModelsProperties.registerProperty(AlchemicalItems.LEVITATION, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-        ItemModelsProperties.registerProperty(AlchemicalItems.CURSED_GREED, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(AlchemicalItems.THIEVING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
         ItemModelsProperties.registerProperty(AlchemicalItems.SOUL_DRAINING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
         ItemModelsProperties.registerProperty(AlchemicalItems.LIFE_TAKING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
     }
@@ -84,8 +78,8 @@ public class Alchemist
         {
             event.getRegistry().register(new EffectSoulDraining());
             event.getRegistry().register(new EffectLifeTaking());
-            event.getRegistry().register(new EffectCursedGreed());
-            event.getRegistry().register(new EffectArmorTeleportation());
+            event.getRegistry().register(new EffectThieving());
+            event.getRegistry().register(new EffectDisplacement());
         }
 
         @SubscribeEvent
@@ -111,9 +105,9 @@ public class Alchemist
 
             // Mixtures.
             event.getRegistry().register(new ItemMixture("slowness"));
-            event.getRegistry().register(new ItemMixture("armor_teleportation"));
+            event.getRegistry().register(new ItemMixture("displacement"));
             event.getRegistry().register(new ItemMixture("levitation"));
-            event.getRegistry().register(new ItemMixture("cursed_greed"));
+            event.getRegistry().register(new ItemMixture("thieving"));
             event.getRegistry().register(new ItemMixture("soul_draining"));
             event.getRegistry().register(new ItemMixture("life_taking"));
         }

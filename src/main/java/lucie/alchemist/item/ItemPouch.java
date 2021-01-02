@@ -19,7 +19,7 @@ public class ItemPouch extends Item
     public ItemPouch()
     {
         super(new Item.Properties().rarity(Alchemist.RARITY).group(Alchemist.GROUP_INGREDIENTS));
-        this.setRegistryName("pouch");
+        setRegistryName("pouch");
     }
 
     @Override

@@ -27,7 +27,7 @@ public class FunctionTooltip
         UtilityTooltip tooltip = new UtilityTooltip(event.getToolTip());
         UtilityCompound.Tool primary = UtilityCompound.Tool.convert(stack, true);
         UtilityCompound.Tool secondary = UtilityCompound.Tool.convert(stack, false);
-        TextFormatting color = stack.getRarity().color.equals(TextFormatting.WHITE) ? TextFormatting.DARK_GREEN : TextFormatting.WHITE;
+        TextFormatting color = stack.getRarity().color == TextFormatting.WHITE ? TextFormatting.DARK_GREEN : TextFormatting.WHITE;
         ResourceLocation location;
 
         // Shows mixtures.

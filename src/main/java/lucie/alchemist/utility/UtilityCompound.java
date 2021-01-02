@@ -60,25 +60,24 @@ public class UtilityCompound
     {
         String effect;
         private int duration, amplifier, uses;
-        private boolean soulfire, exist;
+        private boolean exist;
 
-        public Pouch(String effect, int duration, int amplifier, int uses, boolean soulfire, boolean exist)
+        public Pouch(String effect, int duration, int amplifier, int uses, boolean exist)
         {
             this.effect = effect;
             this.duration = duration;
             this.amplifier = amplifier;
             this.uses = uses;
-            this.soulfire = soulfire;
             this.exist = exist;
         }
 
         public static Pouch convert(ItemStack stack)
         {
-            if (stack.getTag() == null || !stack.getTag().contains("mixture")) return new Pouch("none", 0, 0, 0, false, false);
+            if (stack.getTag() == null || !stack.getTag().contains("mixture")) return new Pouch("none", 0, 0, 0, false);
 
             CompoundNBT nbt = stack.getTag().getCompound("mixture");
 
-            return new Pouch(nbt.getString("effect"), nbt.getInt("duration"), nbt.getInt("amplifier"), nbt.getInt("uses"), nbt.getBoolean("soulfire"), true);
+            return new Pouch(nbt.getString("effect"), nbt.getInt("duration"), nbt.getInt("amplifier"), nbt.getInt("uses"), true);
         }
 
         public String getEffect()
@@ -99,11 +98,6 @@ public class UtilityCompound
         public int getUses()
         {
             return uses;
-        }
-
-        public boolean isSoulfire()
-        {
-            return soulfire;
         }
 
         public boolean doesExist()

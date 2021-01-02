@@ -11,7 +11,7 @@ public class EnchantmentMastery extends Enchantment
     public EnchantmentMastery()
     {
         super(Rarity.RARE, EnchantmentType.create("mastery", item -> item.equals(AlchemicalItems.PESTLE)), new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
-        this.setRegistryName("mastery");
+        setRegistryName("mastery");
     }
 
     @Override
