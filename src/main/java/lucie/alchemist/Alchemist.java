@@ -1,5 +1,7 @@
 package lucie.alchemist;
 
+import lucie.alchemist.block.AlchemicalBlocks;
+import lucie.alchemist.block.BlockCampfire;
 import lucie.alchemist.effect.EffectDisplacement;
 import lucie.alchemist.effect.EffectThieving;
 import lucie.alchemist.effect.EffectLifeTaking;
@@ -9,6 +11,9 @@ import lucie.alchemist.enchantment.EnchantmentKnowledge;
 import lucie.alchemist.enchantment.EnchantmentMastery;
 import lucie.alchemist.enchantment.EnchantmentProficiency;
 import lucie.alchemist.item.*;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.*;
@@ -33,7 +38,7 @@ public class Alchemist
 
     public static final Rarity RARITY = Rarity.create("alchemist", TextFormatting.YELLOW);
 
-    public static final ItemGroup GROUP_INGREDIENTS = new ItemGroup("alchemist.ingredients")
+    public static final ItemGroup GROUP = new ItemGroup("alchemist.materials")
     {
         @Nonnull
         @Override
@@ -68,6 +73,8 @@ public class Alchemist
         ItemModelsProperties.registerProperty(AlchemicalItems.THIEVING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
         ItemModelsProperties.registerProperty(AlchemicalItems.SOUL_DRAINING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
         ItemModelsProperties.registerProperty(AlchemicalItems.LIFE_TAKING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+
+        RenderTypeLookup.setRenderLayer(AlchemicalBlocks.CAMPFIRE, RenderType.getCutout());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -91,17 +98,23 @@ public class Alchemist
         }
 
         @SubscribeEvent
+        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event)
+        {
+            event.getRegistry().register(new BlockCampfire());
+        }
+
+        @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event)
         {
             // Tools.
             event.getRegistry().register(new ItemPouch());
             event.getRegistry().register(new ItemPestle());
 
-            // Ingredients.
-            event.getRegistry().register(new ItemIngredient("stick"));
-            event.getRegistry().register(new ItemIngredient("essence"));
-            event.getRegistry().register(new ItemIngredient("seeds"));
-            event.getRegistry().register(new ItemIngredient("leather"));
+            // Materials.
+            event.getRegistry().register(new ItemMaterial("stick"));
+            event.getRegistry().register(new ItemMaterial("essence"));
+            event.getRegistry().register(new ItemMaterial("seeds"));
+            event.getRegistry().register(new ItemMaterial("leather"));
 
             // Mixtures.
             event.getRegistry().register(new ItemMixture("slowness"));

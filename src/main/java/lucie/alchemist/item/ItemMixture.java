@@ -11,6 +11,7 @@ import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,10 +21,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -152,6 +150,12 @@ public class ItemMixture extends Item
             context.getPlayer().setHeldItem(Hand.OFF_HAND, new ItemStack(AlchemicalItems.POUCH));
 
             Alchemist.LOGGER.debug(context.getPlayer().getHeldItem(Hand.MAIN_HAND).getTag());
+        }
+
+        if (context.getWorld().isRemote)
+        {
+            Minecraft.getInstance().gameRenderer.displayItemActivation(context.getPlayer().getHeldItem(Hand.MAIN_HAND));
+            context.getPlayer().playSound(SoundEvents.ITEM_FIRECHARGE_USE, 1.0F, 1.0F);
         }
 
         return ActionResultType.SUCCESS;

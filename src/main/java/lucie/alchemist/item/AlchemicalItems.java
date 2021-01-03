@@ -13,19 +13,19 @@ public class AlchemicalItems
     @ObjectHolder("pestle")
     public static ItemPestle PESTLE;
 
-    /* Ingredients */
+    /* Materials */
 
     @ObjectHolder("stick")
-    public static ItemIngredient STICK;
+    public static ItemMaterial STICK;
 
     @ObjectHolder("essence")
-    public static ItemIngredient ESSENCE;
+    public static ItemMaterial ESSENCE;
 
     @ObjectHolder("leather")
-    public static ItemIngredient LEATHER;
+    public static ItemMaterial LEATHER;
 
     @ObjectHolder("seeds")
-    public static ItemIngredient SEEDS;
+    public static ItemMaterial SEEDS;
 
     /* Mixtures */
 

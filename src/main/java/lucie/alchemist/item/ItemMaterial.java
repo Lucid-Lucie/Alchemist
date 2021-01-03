@@ -1,9 +1,13 @@
 package lucie.alchemist.item;
 
 import lucie.alchemist.Alchemist;
+import lucie.alchemist.block.AlchemicalBlocks;
+import lucie.alchemist.block.BlockCampfire;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,13 +27,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemIngredient extends Item
+public class ItemMaterial extends Item
 {
     String name;
 
-    public ItemIngredient(String name)
+    public ItemMaterial(String name)
     {
-        super(new Item.Properties().rarity(Alchemist.RARITY).group(Alchemist.GROUP_INGREDIENTS));
+        super(new Item.Properties().rarity(Alchemist.RARITY).group(Alchemist.GROUP));
         setRegistryName(name);
         this.name = name;
     }
@@ -52,6 +56,20 @@ public class ItemIngredient extends Item
     @Override
     public ActionResultType onItemUse(ItemUseContext context)
     {
+        // Essences usability
+        if (equals(AlchemicalItems.ESSENCE) && !context.getWorld().isRemote)
+        {
+            BlockState state = context.getWorld().getBlockState(context.getPos());
+            if (!state.getBlock().equals(Blocks.CAMPFIRE) || !state.get(CampfireBlock.LIT)) return super.onItemUse(context);
+
+            context.getWorld().setBlockState(context.getPos(), AlchemicalBlocks.CAMPFIRE.getDefaultState().with(BlockCampfire.AMOUNT, 12).with(BlockCampfire.FACING, state.get(CampfireBlock.FACING)));
+            context.getItem().shrink(1);
+            context.getWorld().playSound(null, context.getPos(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+            return ActionResultType.SUCCESS;
+        }
+
+        // Seeds usability.
         if (equals(AlchemicalItems.SEEDS) && !context.getWorld().isRemote)
         {
             Block ground = context.getWorld().getBlockState(context.getPos()).getBlock();
