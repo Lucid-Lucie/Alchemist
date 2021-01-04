@@ -1,5 +1,4 @@
 {
-  "type": "minecraft:block",
   "pools": [
     {
       "rolls": 1,
@@ -10,30 +9,9 @@
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": {
-                "min": 0,
-                "max": 2
-              }
+              "count": 2
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "alchemist:stick",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 2
-              }
-            }
-          ]
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
         }
       ]
     }

@@ -23,7 +23,7 @@ public class EffectThieving extends Effect
 
         if (!entityLivingBaseIn.getEntityWorld().isRemote)
         {
-            ItemEntity item = new ItemEntity(entityLivingBaseIn.getEntityWorld(), entityLivingBaseIn.getPosX(), entityLivingBaseIn.getPosY(), entityLivingBaseIn.getPosZ(), new ItemStack(Items.EMERALD));
+            ItemEntity item = new ItemEntity(entityLivingBaseIn.getEntityWorld(), entityLivingBaseIn.getPosX(), entityLivingBaseIn.getPosY(), entityLivingBaseIn.getPosZ(), new ItemStack(Items.GOLD_NUGGET));
 
             double angle = Math.random()*Math.PI*2;
 

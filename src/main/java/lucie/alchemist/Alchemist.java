@@ -3,14 +3,15 @@ package lucie.alchemist;
 import lucie.alchemist.block.AlchemicalBlocks;
 import lucie.alchemist.block.BlockCampfire;
 import lucie.alchemist.effect.EffectDisplacement;
-import lucie.alchemist.effect.EffectThieving;
 import lucie.alchemist.effect.EffectLifeTaking;
 import lucie.alchemist.effect.EffectSoulDraining;
+import lucie.alchemist.effect.EffectThieving;
 import lucie.alchemist.enchantment.AlchemicalEnchantments;
 import lucie.alchemist.enchantment.EnchantmentKnowledge;
 import lucie.alchemist.enchantment.EnchantmentMastery;
 import lucie.alchemist.enchantment.EnchantmentProficiency;
 import lucie.alchemist.item.*;
+import lucie.alchemist.item.AlchemicalItems.ItemType;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -20,7 +21,6 @@ import net.minecraft.item.*;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,8 +35,6 @@ import javax.annotation.Nonnull;
 public class Alchemist
 {
     public static final Logger LOGGER = LogManager.getLogger();
-
-    public static final Rarity RARITY = Rarity.create("alchemist", TextFormatting.YELLOW);
 
     public static final ItemGroup GROUP = new ItemGroup("alchemist.materials")
     {
@@ -111,10 +109,13 @@ public class Alchemist
             event.getRegistry().register(new ItemPestle());
 
             // Materials.
-            event.getRegistry().register(new ItemMaterial("stick"));
-            event.getRegistry().register(new ItemMaterial("essence"));
-            event.getRegistry().register(new ItemMaterial("seeds"));
-            event.getRegistry().register(new ItemMaterial("leather"));
+            event.getRegistry().register(new ItemBasic("stick", ItemType.MATERIAL));
+            event.getRegistry().register(new ItemBasic("essence", ItemType.MATERIAL));
+            event.getRegistry().register(new ItemBasic("seeds", ItemType.MATERIAL));
+            event.getRegistry().register(new ItemBasic("leather", ItemType.MATERIAL));
+
+            // Ingredients.
+            event.getRegistry().register(new ItemBasic("ash", ItemType.INGREDIENT));
 
             // Mixtures.
             event.getRegistry().register(new ItemMixture("slowness"));

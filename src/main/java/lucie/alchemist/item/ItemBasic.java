@@ -3,6 +3,7 @@ package lucie.alchemist.item;
 import lucie.alchemist.Alchemist;
 import lucie.alchemist.block.AlchemicalBlocks;
 import lucie.alchemist.block.BlockCampfire;
+import lucie.alchemist.item.AlchemicalItems.ItemType;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,6 +15,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -27,29 +29,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemMaterial extends Item
+public class ItemBasic extends Item
 {
-    String name;
+    private String name;
 
-    public ItemMaterial(String name)
+    private ItemType type;
+
+    public ItemBasic(String name, ItemType type)
     {
-        super(new Item.Properties().rarity(Alchemist.RARITY).group(Alchemist.GROUP));
+        super(new Item.Properties().rarity(type.getRarity()).group(Alchemist.GROUP));
         setRegistryName(name);
         this.name = name;
+        this.type = type;
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-        if (Screen.hasShiftDown())
-        {
-            int number = I18n.format("journal.alchemist." + name).length();
-
-            UtilityTooltip utility = new UtilityTooltip(tooltip);
-            utility.clear();
-            utility.color(new String[]{I18n.format("journal.alchemist") + " ", I18n.format("journal.alchemist.page", number)}, new TextFormatting[]{TextFormatting.YELLOW, TextFormatting.WHITE});
-            utility.trim("\"" + I18n.format("journal.alchemist." + name) + "\"", 3);
-        }
+        new UtilityTooltip(tooltip).journal(type, name, I18n.format("journal.alchemist." + name).length());
     }
 
     @Nonnull

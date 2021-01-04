@@ -2,6 +2,7 @@ package lucie.alchemist.item;
 
 import lucie.alchemist.Alchemist;
 import lucie.alchemist.enchantment.AlchemicalEnchantments;
+import lucie.alchemist.item.AlchemicalItems.ItemType;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
@@ -26,22 +27,14 @@ public class ItemPestle extends Item
 {
     public ItemPestle()
     {
-        super(new Item.Properties().maxStackSize(1).rarity(Alchemist.RARITY).group(Alchemist.GROUP).maxDamage(32));
+        super(new Item.Properties().maxStackSize(1).rarity(ItemType.TOOL.getRarity()).group(Alchemist.GROUP).maxDamage(32));
         setRegistryName("pestle");
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-        if (Screen.hasShiftDown())
-        {
-            int number = I18n.format("journal.alchemist.pestle").length();
-
-            UtilityTooltip utility = new UtilityTooltip(tooltip);
-            utility.clear();
-            utility.color(new String[]{I18n.format("journal.alchemist") + " ", I18n.format("journal.alchemist.page", number)}, new TextFormatting[]{TextFormatting.YELLOW, TextFormatting.WHITE});
-            utility.trim("\"" + I18n.format("journal.alchemist.pestle") + "\"", 3);
-        }
+        new UtilityTooltip(tooltip).journal(ItemType.TOOL, "pestle", I18n.format("journal.alchemist.pestle").length());
     }
 
     @Nonnull

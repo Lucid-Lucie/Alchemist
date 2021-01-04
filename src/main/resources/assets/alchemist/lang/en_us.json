@@ -26,10 +26,9 @@
   "item.alchemist.essence": "Elderwood Essence",
   "item.alchemist.leather": "Treated Leather",
   "item.alchemist.seeds": "Elderwood Seeds",
+  "item.alchemist.ash": "Pile of Ash",
 
   "_comment": "Journal",
-  "journal.alchemist": "Alchemist's Journal",
-  "journal.alchemist.page": "pg.%s",
   "journal.alchemist.leather": "This leather treated by Elderwood Essence has some unique magical properties.",
   "journal.alchemist.seeds": "The seeds of Elderwood has invasive magical properties as it adapts to anything.",
   "journal.alchemist.essence": "The essence of Elderwood is a magical material that transforms nature around it.",
@@ -37,6 +36,12 @@
   "journal.alchemist.pouch": "A pouch is better than a bottle as they aren't brittle but fluids may be a problem!",
   "journal.alchemist.pestle": "The pestle is a great tool for alchemy but an even greater tool to mash potatoes!",
   "journal.alchemist.mixture": "This may be my greatest mixture ever created though it may inflict fire damage!",
+  "journal.alchemist.ash": "A roaring fire isn't a good place to cook food as it burns anything that it touches.",
+
+  "_comment": "Title",
+  "title.alchemist.alchemy": "Alchemy Journal",
+  "title.alchemist.herbology": "Herbology Journal",
+  "title.alchemist.page": "pg.%s",
 
   "_comment": "Tooltip",
   "tooltip.alchemist.requires": "Requires",

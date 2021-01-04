@@ -6,6 +6,7 @@ import lucie.alchemist.Alchemist;
 import lucie.alchemist.enchantment.AlchemicalEnchantments;
 import lucie.alchemist.function.FunctionMixture.Mixture;
 import lucie.alchemist.function.FunctionTools;
+import lucie.alchemist.item.AlchemicalItems.ItemType;
 import lucie.alchemist.utility.UtilityGetter;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.BlockState;
@@ -50,13 +51,16 @@ public class ItemMixture extends Item
         }
     };
 
+    private String name;
+
     private Mixture mixture;
 
     public ItemMixture(String name)
     {
-        super(new Item.Properties().rarity(Alchemist.RARITY).maxStackSize(1));
+        super(new Item.Properties().rarity(ItemType.TOOL.getRarity()).maxStackSize(1));
         setRegistryName(name + "_ingredients");
         mixture =  new Gson().fromJson(new JsonParser().parse(new InputStreamReader((Objects.requireNonNull(Mixture.class.getClassLoader().getResourceAsStream("data/alchemist/mixtures/" + name + ".json"))), StandardCharsets.UTF_8)).toString(), Mixture.class);
+        this.name = name;
     }
 
     /* Text and Information. */
@@ -86,17 +90,13 @@ public class ItemMixture extends Item
         }
         else
         {
-            if (Screen.hasShiftDown())
+            if (!Screen.hasShiftDown())
             {
-                int number = I18n.format("journal.alchemist.mixture").length();
-
-                utility.clear();
-                utility.color(new String[]{I18n.format("journal.alchemist") + " ", I18n.format("journal.alchemist.page", number)}, new TextFormatting[]{TextFormatting.YELLOW, TextFormatting.WHITE});
-                utility.trim("\"" + I18n.format("journal.alchemist.mixture") + "\"", 3);
+                utility.trim(I18n.format("description.alchemist.ingredients"), 3);
             }
             else
             {
-                utility.trim(I18n.format("description.alchemist.ingredients"), 3);
+                utility.journal(ItemType.TOOL, name, I18n.format("journal.alchemist." + name).length());
             }
         }
     }

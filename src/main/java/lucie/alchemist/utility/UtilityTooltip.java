@@ -1,6 +1,9 @@
 package lucie.alchemist.utility;
 
 import lucie.alchemist.Alchemist;
+import lucie.alchemist.item.AlchemicalItems;
+import lucie.alchemist.item.AlchemicalItems.ItemType;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
@@ -160,4 +163,13 @@ public class UtilityTooltip
         effect(effect, secondary);
     }
 
+    // Adds Journal.
+    public void journal(ItemType type, String name, int page)
+    {
+        if (!Screen.hasShiftDown()) return;
+
+        clear();
+        color(new String[]{I18n.format("title.alchemist." + type.getJournal()) + ": ", I18n.format("title.alchemist.page", page)}, new TextFormatting[]{type.getRarity().color, TextFormatting.WHITE});
+        trim("\"" + I18n.format("journal.alchemist." + name) + "\"", 3);
+    }
 }

@@ -1,5 +1,6 @@
 package lucie.alchemist.block;
 
+import lucie.alchemist.item.AlchemicalItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -9,6 +10,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
@@ -52,12 +54,42 @@ public class BlockCampfire extends Block
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
-        // Used for fuel
-        ITag<Item> tag = ItemTags.getCollection().get(new ResourceLocation("alchemist", "fuels"));
+        // Tags
+        ITag<Item> fuels = ItemTags.getCollection().get(new ResourceLocation("alchemist", "fuels"));
+        ITag<Item> ashes = ItemTags.getCollection().get(new ResourceLocation("alchemist", "ashes"));
         ItemStack stack = player.getHeldItem(handIn);
 
-        // Add fuel if fuel.
-        if (tag != null && tag.contains(stack.getItem()) && state.get(AMOUNT) < 12 && !worldIn.isRemote)
+        // Ashes interaction.
+        if (ashes != null && ashes.contains(stack.getItem()) && !worldIn.isRemote)
+        {
+            stack.shrink(1);
+
+            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.5, pos.getZ() + 0.5F, new ItemStack(AlchemicalItems.ASH));
+
+            double angle = Math.random()*Math.PI*2;
+
+            item.setVelocity(Math.cos(angle)*0.15, 0.3, Math.sin(angle)*0.15);
+
+            worldIn.addEntity(item);
+
+            if (state.get(AMOUNT) == 1)
+            {
+                // When amount reaches zero it destroys the block.
+                worldIn.destroyBlock(pos, true);
+            }
+            else
+            {
+                worldIn.setBlockState(pos, state.with(AMOUNT, state.get(AMOUNT) - 1));
+            }
+
+            worldIn.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 1.0F);
+            worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+            return ActionResultType.SUCCESS;
+        }
+
+        // Fuel interaction.
+        if (fuels != null && fuels.contains(stack.getItem()) && state.get(AMOUNT) < 12 && !worldIn.isRemote)
         {
             int amount = state.get(AMOUNT) + new Random().nextInt(3) + 2;
             if (amount > 12) amount = 12;
@@ -69,8 +101,8 @@ public class BlockCampfire extends Block
             return ActionResultType.SUCCESS;
         }
 
-        // Shrink value if sand.
-        if (stack.getItem().equals(Items.SAND))
+        // Sand or Ash interaction.
+        if (stack.getItem().equals(Items.SAND) || stack.getItem().equals(AlchemicalItems.ASH))
         {
             if (state.get(AMOUNT) == 1)
             {
