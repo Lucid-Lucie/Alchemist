@@ -13,6 +13,7 @@ import lucie.alchemist.enchantment.EnchantmentProficiency;
 import lucie.alchemist.item.*;
 import lucie.alchemist.item.AlchemicalItems.ItemType;
 import net.minecraft.block.Block;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.enchantment.Enchantment;
@@ -25,6 +26,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,6 +63,14 @@ public class Alchemist
     public Alchemist()
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event)
+    {
+        ComposterBlock.CHANCES.put(AlchemicalItems.SEEDS, 0.3F);
+        ComposterBlock.CHANCES.put(AlchemicalItems.STICK, 0.15F);
+        ComposterBlock.CHANCES.put(AlchemicalItems.ESSENCE, 0.9F);
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
@@ -109,13 +119,13 @@ public class Alchemist
             event.getRegistry().register(new ItemPestle());
 
             // Materials.
-            event.getRegistry().register(new ItemBasic("stick", ItemType.MATERIAL));
-            event.getRegistry().register(new ItemBasic("essence", ItemType.MATERIAL));
-            event.getRegistry().register(new ItemBasic("seeds", ItemType.MATERIAL));
-            event.getRegistry().register(new ItemBasic("leather", ItemType.MATERIAL));
+            event.getRegistry().register(new ItemSimple("stick", ItemType.MATERIAL));
+            event.getRegistry().register(new ItemSimple("essence", ItemType.MATERIAL));
+            event.getRegistry().register(new ItemSimple("seeds", ItemType.MATERIAL));
+            event.getRegistry().register(new ItemSimple("leather", ItemType.MATERIAL));
 
             // Ingredients.
-            event.getRegistry().register(new ItemBasic("ash", ItemType.INGREDIENT));
+            event.getRegistry().register(new ItemSimple("ash", ItemType.INGREDIENT));
 
             // Mixtures.
             event.getRegistry().register(new ItemMixture("slowness"));

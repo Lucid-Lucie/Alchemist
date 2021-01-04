@@ -130,6 +130,7 @@ public class BlockCampfire extends Block
         if (!entityIn.isImmuneToFire() && entityIn instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entityIn))
         {
             entityIn.attackEntityFrom(DamageSource.IN_FIRE, 1.0F);
+            entityIn.setFire(5);
         }
     }
 

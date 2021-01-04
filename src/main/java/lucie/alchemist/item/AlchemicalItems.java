@@ -45,21 +45,21 @@ public class AlchemicalItems
     /* Materials */
 
     @ObjectHolder("alchemist:stick")
-    public static ItemBasic STICK;
+    public static ItemSimple STICK;
 
     @ObjectHolder("alchemist:essence")
-    public static ItemBasic ESSENCE;
+    public static ItemSimple ESSENCE;
 
     @ObjectHolder("alchemist:leather")
-    public static ItemBasic LEATHER;
+    public static ItemSimple LEATHER;
 
     @ObjectHolder("alchemist:seeds")
-    public static ItemBasic SEEDS;
+    public static ItemSimple SEEDS;
 
     /* Ingredients */
 
     @ObjectHolder("alchemist:ash")
-    public static ItemBasic ASH;
+    public static ItemSimple ASH;
 
     /* Mixtures */
 
