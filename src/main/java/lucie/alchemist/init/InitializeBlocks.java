@@ -1,9 +1,10 @@
-package lucie.alchemist.block;
+package lucie.alchemist.init;
 
+import lucie.alchemist.block.BlockCampfire;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder("alchemist")
-public class AlchemicalBlocks
+public class InitializeBlocks
 {
     @ObjectHolder("campfire")
     public static BlockCampfire CAMPFIRE;

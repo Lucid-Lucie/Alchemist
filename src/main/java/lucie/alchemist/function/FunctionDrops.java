@@ -1,7 +1,7 @@
 package lucie.alchemist.function;
 
 import com.google.gson.JsonObject;
-import lucie.alchemist.item.AlchemicalItems;
+import lucie.alchemist.init.InitializeItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.conditions.ILootCondition;
@@ -51,7 +51,7 @@ public class FunctionDrops
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
         {
-            generatedLoot.add(new ItemStack(AlchemicalItems.STICK));
+            generatedLoot.add(new ItemStack(InitializeItems.STICK));
             return generatedLoot;
         }
     }
@@ -82,7 +82,7 @@ public class FunctionDrops
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context)
         {
-            generatedLoot.add(new ItemStack(AlchemicalItems.SEEDS));
+            generatedLoot.add(new ItemStack(InitializeItems.SEEDS));
             return generatedLoot;
         }
     }

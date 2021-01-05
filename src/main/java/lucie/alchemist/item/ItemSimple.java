@@ -1,9 +1,10 @@
 package lucie.alchemist.item;
 
 import lucie.alchemist.Alchemist;
-import lucie.alchemist.block.AlchemicalBlocks;
+import lucie.alchemist.init.InitializeBlocks;
 import lucie.alchemist.block.BlockCampfire;
-import lucie.alchemist.item.AlchemicalItems.ItemType;
+import lucie.alchemist.init.InitializeItems;
+import lucie.alchemist.init.InitializeItems.ItemType;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,20 +12,21 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemSimple extends Item
@@ -54,13 +56,13 @@ public class ItemSimple extends Item
         BlockState state = context.getWorld().getBlockState(context.getPos());
 
         // Essences usability
-        if (equals(AlchemicalItems.ESSENCE) && !context.getWorld().isRemote)
+        if (equals(InitializeItems.ESSENCE) && !context.getWorld().isRemote)
         {
             return useEssence(context, state);
         }
 
         // Seeds usability.
-        if (equals(AlchemicalItems.SEEDS) && !context.getWorld().isRemote)
+        if (equals(InitializeItems.SEEDS) && !context.getWorld().isRemote)
         {
             return useSeeds(context, state);
         }
@@ -68,13 +70,49 @@ public class ItemSimple extends Item
         return super.onItemUse(context);
     }
 
+    @Nonnull
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, @Nonnull Hand handIn)
+    {
+        // Leather usability.
+        if (equals(InitializeItems.LEATHER))
+        {
+            System.out.println("test");
+
+            return useLeather(playerIn, handIn);
+        }
+
+        return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+
+    private static ActionResult<ItemStack> useLeather(PlayerEntity player, Hand hand)
+    {
+        ItemStack leather = player.getHeldItem(Hand.MAIN_HAND);
+        ItemStack armor = player.getHeldItem(Hand.OFF_HAND);
+        List<Item> list = new ArrayList<>(Arrays.asList(Items.LEATHER_BOOTS, Items.LEATHER_LEGGINGS, Items.LEATHER_CHESTPLATE, Items.LEATHER_HELMET));
+
+        // Needs armor, leather, damage, and right hand to repair.
+        if (!leather.getItem().equals(InitializeItems.LEATHER) || !list.contains(armor.getItem()) || armor.getDamage() == 0 || hand == Hand.OFF_HAND) return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
+
+        // Calculate repair.
+        int repair = armor.getMaxDamage() / 3;
+        int damage = repair > armor.getDamage() ? 0 : armor.getDamage() - repair;
+
+        // Repair with material.
+        armor.setDamage(damage);
+        leather.shrink(1);
+        player.setHeldItem(hand, armor);
+
+        return new ActionResult<>(ActionResultType.SUCCESS, leather);
+    }
+
     private static ActionResultType useEssence(ItemUseContext context, BlockState state)
     {
         // Block need to be campfire and lit.
-        if (!state.getBlock().equals(Blocks.CAMPFIRE) || !state.get(CampfireBlock.LIT)) return ActionResultType.FAIL;
+        if (!state.getBlock().equals(Blocks.CAMPFIRE) || !state.get(CampfireBlock.LIT)) return ActionResultType.PASS;
 
         // Replace campfire.
-        context.getWorld().setBlockState(context.getPos(), AlchemicalBlocks.CAMPFIRE.getDefaultState().with(BlockCampfire.AMOUNT, 12).with(BlockCampfire.FACING, state.get(CampfireBlock.FACING)));
+        context.getWorld().setBlockState(context.getPos(), InitializeBlocks.CAMPFIRE.getDefaultState().with(BlockCampfire.AMOUNT, 12).with(BlockCampfire.FACING, state.get(CampfireBlock.FACING)));
         context.getWorld().playSound(null, context.getPos(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
         context.getItem().shrink(1);
 
@@ -84,7 +122,7 @@ public class ItemSimple extends Item
     private static ActionResultType useSeeds(ItemUseContext context, BlockState state)
     {
         // Block needs to be either grass, crimson, or warped and have a air block above.
-        if ((!state.getBlock().equals(Blocks.DIRT) && !state.getBlock().equals(Blocks.NETHERRACK)) || !context.getWorld().getBlockState(context.getPos().up()).getBlock().equals(Blocks.AIR)) return ActionResultType.FAIL;
+        if ((!state.getBlock().equals(Blocks.DIRT) && !state.getBlock().equals(Blocks.NETHERRACK)) || !context.getWorld().getBlockState(context.getPos().up()).getBlock().equals(Blocks.AIR)) return ActionResultType.PASS;
 
         // Get block replacement and assume type is grass.
         Block output = state.getBlock().equals(Blocks.DIRT) ? Blocks.GRASS : random.nextBoolean() ? Blocks.CRIMSON_NYLIUM : Blocks.WARPED_NYLIUM;
@@ -101,7 +139,7 @@ public class ItemSimple extends Item
         {
             // Floral list stored as tags.
             ITag<Block> flora = BlockTags.getCollection().get(new ResourceLocation("alchemist", "seeds_" + type));
-            if (flora == null) return ActionResultType.FAIL;
+            if (flora == null) return ActionResultType.PASS;
 
             // Set flora.
             context.getWorld().setBlockState(context.getPos().up(), flora.getRandomElement(random).getDefaultState());

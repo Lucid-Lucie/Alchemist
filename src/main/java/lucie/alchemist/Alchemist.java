@@ -1,17 +1,18 @@
 package lucie.alchemist;
 
-import lucie.alchemist.block.AlchemicalBlocks;
+import lucie.alchemist.init.InitializeBlocks;
 import lucie.alchemist.block.BlockCampfire;
 import lucie.alchemist.effect.EffectDisplacement;
 import lucie.alchemist.effect.EffectLifeTaking;
 import lucie.alchemist.effect.EffectSoulDraining;
 import lucie.alchemist.effect.EffectThieving;
-import lucie.alchemist.enchantment.AlchemicalEnchantments;
+import lucie.alchemist.init.InitializeEnchantments;
 import lucie.alchemist.enchantment.EnchantmentKnowledge;
 import lucie.alchemist.enchantment.EnchantmentMastery;
 import lucie.alchemist.enchantment.EnchantmentProficiency;
+import lucie.alchemist.init.InitializeItems;
 import lucie.alchemist.item.*;
-import lucie.alchemist.item.AlchemicalItems.ItemType;
+import lucie.alchemist.init.InitializeItems.ItemType;
 import net.minecraft.block.Block;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.RenderType;
@@ -44,7 +45,7 @@ public class Alchemist
         @Override
         public ItemStack createIcon()
         {
-            return new ItemStack(AlchemicalItems.POUCH);
+            return new ItemStack(InitializeItems.POUCH);
         }
 
         @Override
@@ -52,11 +53,11 @@ public class Alchemist
         {
             super.fill(items);
 
-            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(AlchemicalEnchantments.PROFICIENCY, 1)));
-            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(AlchemicalEnchantments.PROFICIENCY, 2)));
-            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(AlchemicalEnchantments.PROFICIENCY, 3)));
-            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(AlchemicalEnchantments.KNOWLEDGE, 1)));
-            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(AlchemicalEnchantments.MASTERY, 1)));
+            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(InitializeEnchantments.PROFICIENCY, 1)));
+            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(InitializeEnchantments.PROFICIENCY, 2)));
+            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(InitializeEnchantments.PROFICIENCY, 3)));
+            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(InitializeEnchantments.KNOWLEDGE, 1)));
+            items.add(EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(InitializeEnchantments.MASTERY, 1)));
         }
     };
 
@@ -68,21 +69,21 @@ public class Alchemist
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        ComposterBlock.CHANCES.put(AlchemicalItems.SEEDS, 0.3F);
-        ComposterBlock.CHANCES.put(AlchemicalItems.STICK, 0.15F);
-        ComposterBlock.CHANCES.put(AlchemicalItems.ESSENCE, 0.9F);
+        ComposterBlock.CHANCES.put(InitializeItems.SEEDS, 0.3F);
+        ComposterBlock.CHANCES.put(InitializeItems.STICK, 0.15F);
+        ComposterBlock.CHANCES.put(InitializeItems.ESSENCE, 0.9F);
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
     {
-        ItemModelsProperties.registerProperty(AlchemicalItems.SLOWNESS, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-        ItemModelsProperties.registerProperty(AlchemicalItems.DISPLACEMENT, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-        ItemModelsProperties.registerProperty(AlchemicalItems.LEVITATION, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-        ItemModelsProperties.registerProperty(AlchemicalItems.THIEVING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-        ItemModelsProperties.registerProperty(AlchemicalItems.SOUL_DRAINING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-        ItemModelsProperties.registerProperty(AlchemicalItems.LIFE_TAKING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(InitializeItems.SLOWNESS, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(InitializeItems.DISPLACEMENT, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(InitializeItems.LEVITATION, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(InitializeItems.THIEVING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(InitializeItems.SOUL_DRAINING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
+        ItemModelsProperties.registerProperty(InitializeItems.LIFE_TAKING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
 
-        RenderTypeLookup.setRenderLayer(AlchemicalBlocks.CAMPFIRE, RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(InitializeBlocks.CAMPFIRE, RenderType.getCutout());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -100,9 +101,12 @@ public class Alchemist
         @SubscribeEvent
         public static void onEnchantmentsRegistry(RegistryEvent.Register<Enchantment> event)
         {
+            // Tools.
+            event.getRegistry().register(new EnchantmentKnowledge());
+
+            // Pestle.
             event.getRegistry().register(new EnchantmentProficiency());
             event.getRegistry().register(new EnchantmentMastery());
-            event.getRegistry().register(new EnchantmentKnowledge());
         }
 
         @SubscribeEvent
@@ -115,7 +119,7 @@ public class Alchemist
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event)
         {
             // Tools.
-            event.getRegistry().register(new ItemPouch());
+            event.getRegistry().register(new ItemSimple("pouch", ItemType.TOOL));
             event.getRegistry().register(new ItemPestle());
 
             // Materials.

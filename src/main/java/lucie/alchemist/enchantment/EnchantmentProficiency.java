@@ -1,6 +1,7 @@
 package lucie.alchemist.enchantment;
 
-import lucie.alchemist.item.AlchemicalItems;
+import lucie.alchemist.init.InitializeEnchantments;
+import lucie.alchemist.init.InitializeItems;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -10,7 +11,7 @@ public class EnchantmentProficiency extends Enchantment
 {
     public EnchantmentProficiency()
     {
-        super(Rarity.UNCOMMON, EnchantmentType.create("proficiency", item -> item.equals(AlchemicalItems.PESTLE)), new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
+        super(Rarity.UNCOMMON, EnchantmentType.create("proficiency", item -> item.equals(InitializeItems.PESTLE)), new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         setRegistryName("proficiency");
     }
 
@@ -35,13 +36,13 @@ public class EnchantmentProficiency extends Enchantment
     @Override
     protected boolean canApplyTogether(Enchantment ench)
     {
-        return !ench.equals(AlchemicalEnchantments.MASTERY);
+        return !ench.equals(InitializeEnchantments.MASTERY);
     }
 
     @Override
     public boolean canApply(ItemStack stack)
     {
-        return stack.getItem().equals(AlchemicalItems.PESTLE);
+        return stack.getItem().equals(InitializeItems.PESTLE);
     }
 
     @Override

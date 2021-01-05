@@ -1,8 +1,7 @@
 package lucie.alchemist.utility;
 
 import lucie.alchemist.Alchemist;
-import lucie.alchemist.item.AlchemicalItems;
-import lucie.alchemist.item.AlchemicalItems.ItemType;
+import lucie.alchemist.init.InitializeItems.ItemType;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.EffectInstance;

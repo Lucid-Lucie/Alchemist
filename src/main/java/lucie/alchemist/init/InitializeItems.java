@@ -1,20 +1,24 @@
-package lucie.alchemist.item;
+package lucie.alchemist.init;
 
+import lucie.alchemist.item.ItemMixture;
+import lucie.alchemist.item.ItemPestle;
+import lucie.alchemist.item.ItemSimple;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class AlchemicalItems
+public class InitializeItems
 {
     /* Rarity */
 
-    public static enum  ItemType
+    public enum  ItemType
     {
         TOOL(Rarity.create("alchemy_tool", TextFormatting.YELLOW), "alchemy"),
         MATERIAL(Rarity.create("alchemy_material", TextFormatting.YELLOW), "alchemy"),
         INGREDIENT(Rarity.create("alchemy_ingredient", TextFormatting.BLUE), "herbology");
 
         private Rarity rarity;
+
         private String journal;
 
         ItemType(Rarity rarity, String type)
@@ -37,7 +41,7 @@ public class AlchemicalItems
     /* Tools */
 
     @ObjectHolder("alchemist:pouch")
-    public static ItemPouch POUCH;
+    public static ItemSimple POUCH;
 
     @ObjectHolder("alchemist:pestle")
     public static ItemPestle PESTLE;

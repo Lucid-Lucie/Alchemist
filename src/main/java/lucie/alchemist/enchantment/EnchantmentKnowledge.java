@@ -1,10 +1,13 @@
 package lucie.alchemist.enchantment;
 
-import lucie.alchemist.function.FunctionTools;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentKnowledge extends Enchantment
 {
@@ -53,6 +56,10 @@ public class EnchantmentKnowledge extends Enchantment
     @Override
     public boolean canApply(ItemStack stack)
     {
-        return FunctionTools.getItems().contains(stack.getItem());
+        // Tools that can have knowledge are contained as an item tag.
+        ITag<Item> tools = ItemTags.getCollection().get(new ResourceLocation("alchemist", "tools"));
+        if (tools == null) return false;
+
+        return tools.contains(stack.getItem());
     }
 }

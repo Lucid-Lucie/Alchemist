@@ -1,6 +1,6 @@
 package lucie.alchemist.block;
 
-import lucie.alchemist.item.AlchemicalItems;
+import lucie.alchemist.init.InitializeItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -64,7 +64,7 @@ public class BlockCampfire extends Block
         {
             stack.shrink(1);
 
-            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.5, pos.getZ() + 0.5F, new ItemStack(AlchemicalItems.ASH));
+            ItemEntity item = new ItemEntity(worldIn, pos.getX() + 0.5F, pos.getY() + 0.5, pos.getZ() + 0.5F, new ItemStack(InitializeItems.ASH));
 
             double angle = Math.random()*Math.PI*2;
 
@@ -102,7 +102,7 @@ public class BlockCampfire extends Block
         }
 
         // Sand or Ash interaction.
-        if (stack.getItem().equals(Items.SAND) || stack.getItem().equals(AlchemicalItems.ASH))
+        if (stack.getItem().equals(Items.SAND) || stack.getItem().equals(InitializeItems.ASH))
         {
             if (state.get(AMOUNT) == 1)
             {

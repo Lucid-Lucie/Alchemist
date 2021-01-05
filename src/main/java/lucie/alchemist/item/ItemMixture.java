@@ -3,10 +3,10 @@ package lucie.alchemist.item;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import lucie.alchemist.Alchemist;
-import lucie.alchemist.enchantment.AlchemicalEnchantments;
+import lucie.alchemist.init.InitializeEnchantments;
 import lucie.alchemist.function.FunctionMixture.Mixture;
-import lucie.alchemist.function.FunctionTools;
-import lucie.alchemist.item.AlchemicalItems.ItemType;
+import lucie.alchemist.init.InitializeItems;
+import lucie.alchemist.init.InitializeItems.ItemType;
 import lucie.alchemist.utility.UtilityGetter;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.BlockState;
@@ -22,6 +22,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -47,13 +49,15 @@ public class ItemMixture extends Item
         @Override
         public ItemStack createIcon()
         {
-            return AlchemicalItems.SOUL_DRAINING.compoundWrite(new ItemStack(AlchemicalItems.LIFE_TAKING), 0, true);
+            return InitializeItems.SOUL_DRAINING.compoundWrite(new ItemStack(InitializeItems.LIFE_TAKING), 0, true);
         }
     };
 
     private String name;
 
     private Mixture mixture;
+
+    private ITag<Item> tools = ItemTags.getCollection().get(new ResourceLocation("alchemist", "tools"));
 
     public ItemMixture(String name)
     {
@@ -107,7 +111,7 @@ public class ItemMixture extends Item
     @Override
     public ActionResultType onItemUse(ItemUseContext context)
     {
-        if (context.getPlayer() == null) return super.onItemUse(context);
+        if (context.getPlayer() == null || tools == null) return super.onItemUse(context);
 
         ItemStack hand_right = context.getPlayer().getHeldItem(Hand.MAIN_HAND);
         ItemStack hand_left = context.getPlayer().getHeldItem(Hand.OFF_HAND);
@@ -120,16 +124,16 @@ public class ItemMixture extends Item
         if (context.getHand() == Hand.MAIN_HAND)
         {
             // Can't have a tool in offhand when removing mixture. (Prevents clumsy people)
-            if (FunctionTools.getItems().contains(hand_left.getItem())) return super.onItemUse(context);
+            if (tools.contains(hand_left.getItem())) return super.onItemUse(context);
 
             // Removes mixture and turns off the campfire.
             context.getWorld().setBlockState(context.getPos(), state.with(CampfireBlock.LIT, true));
-            context.getPlayer().setHeldItem(Hand.MAIN_HAND, new ItemStack(AlchemicalItems.POUCH));
+            context.getPlayer().setHeldItem(Hand.MAIN_HAND, new ItemStack(InitializeItems.POUCH));
         }
         else
         {
             // Needs left hand to be this and right hand to be tool.
-            if (!hand_left.getItem().equals(this) || !FunctionTools.getItems().contains(hand_right.getItem())) return super.onItemUse(context);
+            if (!hand_left.getItem().equals(this) || !tools.contains(hand_right.getItem())) return super.onItemUse(context);
 
             Pouch pouch = Pouch.convert(hand_left);
             Tool tool_primary = Tool.convert(hand_right, true);
@@ -139,7 +143,7 @@ public class ItemMixture extends Item
             if (!pouch.doesExist()) return super.onItemUse(context);
 
             // Tool needs to be able to put on a new mixture
-            if (tool_primary.getUses() != 0 && (tool_secondary.getUses() != 0 || EnchantmentHelper.getEnchantmentLevel(AlchemicalEnchantments.KNOWLEDGE, hand_right) == 0)) return super.onItemUse(context);
+            if (tool_primary.getUses() != 0 && (tool_secondary.getUses() != 0 || EnchantmentHelper.getEnchantmentLevel(InitializeEnchantments.KNOWLEDGE, hand_right) == 0)) return super.onItemUse(context);
 
             // Tool can't have same mixtures.
             if ((pouch.getEffect().equals(tool_primary.getEffect()) && tool_primary.getUses() > 0) || (pouch.getEffect().equals(tool_secondary.getEffect()) && tool_secondary.getUses() > 0)) return super.onItemUse(context);
@@ -147,7 +151,7 @@ public class ItemMixture extends Item
             // Make campfire unlit, add mixture to tool, empty pouch.
             context.getWorld().setBlockState(context.getPos(), state.with(CampfireBlock.LIT, false));
             context.getPlayer().setHeldItem(Hand.MAIN_HAND, compoundInject(hand_left, hand_right));
-            context.getPlayer().setHeldItem(Hand.OFF_HAND, new ItemStack(AlchemicalItems.POUCH));
+            context.getPlayer().setHeldItem(Hand.OFF_HAND, new ItemStack(InitializeItems.POUCH));
 
             Alchemist.LOGGER.debug(context.getPlayer().getHeldItem(Hand.MAIN_HAND).getTag());
         }
@@ -227,7 +231,7 @@ public class ItemMixture extends Item
     public ItemStack compoundInject(ItemStack mixture, ItemStack tool)
     {
         // Knowledge gives an extra slot to put mixtures in.
-        boolean hasKnowledge = EnchantmentHelper.getEnchantmentLevel(AlchemicalEnchantments.KNOWLEDGE, tool) > 0;
+        boolean hasKnowledge = EnchantmentHelper.getEnchantmentLevel(InitializeEnchantments.KNOWLEDGE, tool) > 0;
 
         Pouch pouch = Pouch.convert(mixture);
         Tool tool_primary = Tool.convert(tool, true);

@@ -5,7 +5,10 @@ import lucie.alchemist.utility.UtilityGetter;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,9 +25,10 @@ public class FunctionTooltip
     public static void tooltip(ItemTooltipEvent event)
     {
         ItemStack stack = event.getItemStack();
+        ITag<Item> tools = ItemTags.getCollection().get(new ResourceLocation("alchemist", "tools"));
 
         // Stack need to be correct tool.
-        if (!FunctionTools.getItems().contains(stack.getItem())) return;
+        if (tools == null || !tools.contains(stack.getItem())) return;
 
         // Using tools instead of long ass lines.
         UtilityTooltip tooltip = new UtilityTooltip(event.getToolTip());
