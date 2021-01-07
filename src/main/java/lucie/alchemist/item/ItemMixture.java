@@ -3,8 +3,8 @@ package lucie.alchemist.item;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import lucie.alchemist.Alchemist;
-import lucie.alchemist.init.InitializeEnchantments;
 import lucie.alchemist.function.FunctionMixture.Mixture;
+import lucie.alchemist.init.InitializeEnchantments;
 import lucie.alchemist.init.InitializeItems;
 import lucie.alchemist.init.InitializeItems.ItemType;
 import lucie.alchemist.utility.UtilityGetter;
@@ -57,8 +57,6 @@ public class ItemMixture extends Item
 
     private Mixture mixture;
 
-    private ITag<Item> tools = ItemTags.getCollection().get(new ResourceLocation("alchemist", "tools"));
-
     public ItemMixture(String name)
     {
         super(new Item.Properties().rarity(ItemType.TOOL.getRarity()).maxStackSize(1));
@@ -87,20 +85,20 @@ public class ItemMixture extends Item
         if (pouch.doesExist())
         {
             // Put info on tooltip
-            utility.color(new String[]{I18n.format("tooltip.alchemist.requires") + ": ", I18n.format("block.minecraft.campfire")}, new TextFormatting[]{TextFormatting.GRAY, TextFormatting.WHITE});
+            utility.setColor(new String[]{I18n.format("tooltip.alchemist.requires") + ": ", I18n.format("block.minecraft.campfire")}, new TextFormatting[]{TextFormatting.GRAY, TextFormatting.WHITE});
             utility.space();
-            utility.color(new String[]{I18n.format("potion.whenDrank")+ " ", "[", String.valueOf(pouch.getUses()),"]"}, new TextFormatting[]{getRarity(stack).color, TextFormatting.GRAY, TextFormatting.WHITE, TextFormatting.GRAY});
-            utility.effect(UtilityGetter.getEffectInstance(new ResourceLocation(pouch.getEffect()), pouch.getDuration(), pouch.getAmplifier()), TextFormatting.WHITE);
+            utility.setColor(new String[]{I18n.format("potion.whenDrank")+ " ", "[", String.valueOf(pouch.getUses()),"]"}, new TextFormatting[]{getRarity(stack).color, TextFormatting.GRAY, TextFormatting.WHITE, TextFormatting.GRAY});
+            utility.setEffect(UtilityGetter.getEffectInstance(new ResourceLocation(pouch.getEffect()), pouch.getDuration(), pouch.getAmplifier()), TextFormatting.WHITE);
         }
         else
         {
             if (!Screen.hasShiftDown())
             {
-                utility.trim(I18n.format("description.alchemist.ingredients"), 3);
+                utility.setTrim(I18n.format("description.alchemist.ingredients"), 3);
             }
             else
             {
-                utility.journal(ItemType.TOOL, name, I18n.format("journal.alchemist." + name).length());
+                utility.journal(ItemType.TOOL, name, I18n.format("journal.alchemist.mixture").length());
             }
         }
     }
@@ -111,6 +109,8 @@ public class ItemMixture extends Item
     @Override
     public ActionResultType onItemUse(ItemUseContext context)
     {
+        ITag<Item> tools = ItemTags.getCollection().get(new ResourceLocation("alchemist", "tools"));
+
         if (context.getPlayer() == null || tools == null) return super.onItemUse(context);
 
         ItemStack hand_right = context.getPlayer().getHeldItem(Hand.MAIN_HAND);

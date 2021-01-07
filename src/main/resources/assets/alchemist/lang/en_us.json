@@ -46,6 +46,7 @@
   "_comment": "Tooltip",
   "tooltip.alchemist.requires": "Requires",
   "tooltip.alchemist.info": "Hold 'shift' for info.",
+  "tooltip.alchemist.mixtures": "Mixtures",
 
   "_comment": "Description",
   "description.alchemist.ingredients": "Contents needs to be pulverized with a pestle before it can be used."

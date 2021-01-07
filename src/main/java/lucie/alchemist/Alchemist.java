@@ -1,22 +1,19 @@
 package lucie.alchemist;
 
-import lucie.alchemist.init.InitializeBlocks;
-import lucie.alchemist.block.BlockCampfire;
 import lucie.alchemist.effect.EffectDisplacement;
 import lucie.alchemist.effect.EffectLifeTaking;
 import lucie.alchemist.effect.EffectSoulDraining;
 import lucie.alchemist.effect.EffectThieving;
-import lucie.alchemist.init.InitializeEnchantments;
 import lucie.alchemist.enchantment.EnchantmentKnowledge;
 import lucie.alchemist.enchantment.EnchantmentMastery;
 import lucie.alchemist.enchantment.EnchantmentProficiency;
+import lucie.alchemist.init.InitializeEnchantments;
 import lucie.alchemist.init.InitializeItems;
-import lucie.alchemist.item.*;
 import lucie.alchemist.init.InitializeItems.ItemType;
-import net.minecraft.block.Block;
+import lucie.alchemist.item.ItemMixture;
+import lucie.alchemist.item.ItemPestle;
+import lucie.alchemist.item.ItemSimple;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.*;
@@ -82,8 +79,6 @@ public class Alchemist
         ItemModelsProperties.registerProperty(InitializeItems.THIEVING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
         ItemModelsProperties.registerProperty(InitializeItems.SOUL_DRAINING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
         ItemModelsProperties.registerProperty(InitializeItems.LIFE_TAKING, new ResourceLocation("mixture"), (stack, world, entity) -> ItemMixture.compoundCheck(stack) ? 1 : 0);
-
-        RenderTypeLookup.setRenderLayer(InitializeBlocks.CAMPFIRE, RenderType.getCutout());
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -107,12 +102,6 @@ public class Alchemist
             // Pestle.
             event.getRegistry().register(new EnchantmentProficiency());
             event.getRegistry().register(new EnchantmentMastery());
-        }
-
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event)
-        {
-            event.getRegistry().register(new BlockCampfire());
         }
 
         @SubscribeEvent

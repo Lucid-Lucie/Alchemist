@@ -1,15 +1,12 @@
 package lucie.alchemist.item;
 
 import lucie.alchemist.Alchemist;
-import lucie.alchemist.init.InitializeBlocks;
-import lucie.alchemist.block.BlockCampfire;
 import lucie.alchemist.init.InitializeItems;
 import lucie.alchemist.init.InitializeItems.ItemType;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.CampfireBlock;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -53,18 +50,10 @@ public class ItemSimple extends Item
     @Override
     public ActionResultType onItemUse(ItemUseContext context)
     {
-        BlockState state = context.getWorld().getBlockState(context.getPos());
-
-        // Essences usability
-        if (equals(InitializeItems.ESSENCE) && !context.getWorld().isRemote)
-        {
-            return useEssence(context, state);
-        }
-
         // Seeds usability.
         if (equals(InitializeItems.SEEDS) && !context.getWorld().isRemote)
         {
-            return useSeeds(context, state);
+            return useSeeds(context, context.getWorld().getBlockState(context.getPos()));
         }
 
         return super.onItemUse(context);
@@ -77,8 +66,6 @@ public class ItemSimple extends Item
         // Leather usability.
         if (equals(InitializeItems.LEATHER))
         {
-            System.out.println("test");
-
             return useLeather(playerIn, handIn);
         }
 
@@ -104,19 +91,6 @@ public class ItemSimple extends Item
         player.setHeldItem(hand, armor);
 
         return new ActionResult<>(ActionResultType.SUCCESS, leather);
-    }
-
-    private static ActionResultType useEssence(ItemUseContext context, BlockState state)
-    {
-        // Block need to be campfire and lit.
-        if (!state.getBlock().equals(Blocks.CAMPFIRE) || !state.get(CampfireBlock.LIT)) return ActionResultType.PASS;
-
-        // Replace campfire.
-        context.getWorld().setBlockState(context.getPos(), InitializeBlocks.CAMPFIRE.getDefaultState().with(BlockCampfire.AMOUNT, 12).with(BlockCampfire.FACING, state.get(CampfireBlock.FACING)));
-        context.getWorld().playSound(null, context.getPos(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-        context.getItem().shrink(1);
-
-        return ActionResultType.SUCCESS;
     }
 
     private static ActionResultType useSeeds(ItemUseContext context, BlockState state)

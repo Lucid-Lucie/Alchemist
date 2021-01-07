@@ -1,10 +1,12 @@
 package lucie.alchemist.function;
 
+import lucie.alchemist.init.InitializeEnchantments;
 import lucie.alchemist.utility.UtilityCompound;
 import lucie.alchemist.utility.UtilityGetter;
 import lucie.alchemist.utility.UtilityTooltip;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ITag;
@@ -34,40 +36,45 @@ public class FunctionTooltip
         UtilityTooltip tooltip = new UtilityTooltip(event.getToolTip());
         UtilityCompound.Tool primary = UtilityCompound.Tool.convert(stack, true);
         UtilityCompound.Tool secondary = UtilityCompound.Tool.convert(stack, false);
-        TextFormatting color = stack.getRarity().color == TextFormatting.WHITE ? TextFormatting.DARK_GREEN : TextFormatting.WHITE;
-        ResourceLocation location;
+
+        // Get color that name has, get max available mixtures, get amount of mixtures in use.
+        TextFormatting name = stack.isEnchanted() ? TextFormatting.AQUA : stack.getRarity().color;
+        int max = EnchantmentHelper.getEnchantmentLevel(InitializeEnchantments.KNOWLEDGE, stack) > 0 ? 2 : 1;
+        int count = primary.getUses() > 0 ? 1 : 0;
+        count += secondary.getUses() > 0 ? 1 : 0;
 
         // Shows mixtures.
         if (Screen.hasShiftDown() && ((primary.doesExist() && primary.getUses() > 0) || (secondary.doesExist() && secondary.getUses() > 0)))
         {
             // Get name and when applied.
             tooltip.clear();
-            tooltip.color(new String[]{stack.getDisplayName().getString()}, new TextFormatting[]{stack.getRarity().color});
-            tooltip.color(new String[]{I18n.format("potion.whenDrank")}, new TextFormatting[]{TextFormatting.GRAY});
+
+            // Show count of mixtures on name.
+            tooltip.setCount(stack, name, count, max);
+            tooltip.setColor(new String[]{I18n.format("tooltip.alchemist.mixtures")}, new TextFormatting[]{TextFormatting.GRAY});
             tooltip.space();
+            tooltip.setColor(new String[]{I18n.format("potion.whenDrank")}, new TextFormatting[]{TextFormatting.GRAY});
 
             // Show primary mixture.
             if (primary.doesExist() && primary.getUses() > 0)
             {
-                location = new ResourceLocation(primary.getEffect());
-
-                tooltip.mixture(UtilityGetter.getEffectInstance(location, primary.getDuration(), primary.getAmplifier()), primary.getUses(), location, stack.getRarity().color, color);
+                tooltip.setMixture(UtilityGetter.getEffectInstance(new ResourceLocation(primary.getEffect()), primary.getDuration(), primary.getAmplifier()), primary.getUses(), TextFormatting.DARK_GREEN);
             }
 
             // Show secondary mixture.
             if (secondary.doesExist() && secondary.getUses() > 0)
             {
-                if (primary.doesExist() && primary.getUses() > 0) tooltip.space();
-
-                location = new ResourceLocation(secondary.getEffect());
-
-                tooltip.mixture(UtilityGetter.getEffectInstance(location, secondary.getDuration(), secondary.getAmplifier()), secondary.getUses(), location, stack.getRarity().color, color);
+                tooltip.setMixture(UtilityGetter.getEffectInstance(new ResourceLocation(secondary.getEffect()), secondary.getDuration(), secondary.getAmplifier()), secondary.getUses(), TextFormatting.DARK_GREEN);
             }
         }
         else if ((primary.doesExist() && primary.getUses() > 0) || (secondary.doesExist() && secondary.getUses() > 0))
         {
+            // Show count of mixtures on name.
+            event.getToolTip().remove(0);
+            tooltip.setCount(stack, name, count, max);
+
             // Shift to show mixture information.
-            tooltip.color(new String[]{I18n.format("tooltip.alchemist.info")}, new TextFormatting[]{TextFormatting.DARK_GRAY});
+            event.getToolTip().add(1, tooltip.getColor(new String[]{I18n.format("tooltip.alchemist.info")}, new TextFormatting[]{TextFormatting.GRAY}));
         }
     }
 }
