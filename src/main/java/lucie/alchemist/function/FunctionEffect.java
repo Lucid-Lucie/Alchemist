@@ -1,6 +1,5 @@
 package lucie.alchemist.function;
 
-import lucie.alchemist.utility.UtilityCompound;
 import lucie.alchemist.utility.UtilityGetter;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -30,7 +29,7 @@ public class FunctionEffect
         ItemStack stack = ((LivingEntity) event.getSource().getImmediateSource()).getHeldItem(((LivingEntity) event.getSource().getImmediateSource()).getActiveHand());
 
         // Check of tool.
-        if (EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantment.BREWING, stack) == 0) return;
+        if (EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantments.BREWING, stack) == 0) return;
 
         // Check for both primary and secondary slots.
         Tool primary = Tool.convert(stack, true);

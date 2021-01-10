@@ -26,7 +26,7 @@ public class FunctionTooltip
         ItemStack stack = event.getItemStack();
 
         // Stack need to be correct tool.
-        if (EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantment.BREWING, stack) == 0) return;
+        if (EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantments.BREWING, stack) == 0) return;
 
         // Using tools instead of long ass lines.
         UtilityTooltip tooltip = new UtilityTooltip(event.getToolTip());
@@ -35,7 +35,7 @@ public class FunctionTooltip
 
         // Get color that name has, get max available potions, get amount of potions in use.
         TextFormatting name = stack.isEnchanted() ? TextFormatting.AQUA : stack.getRarity().color;
-        int max = EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantment.BREWING, stack) > 0 ? 2 : 1;
+        int max = EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantments.BREWING, stack) > 0 ? 2 : 1;
         int count = primary.getUses() > 0 ? 1 : 0;
         count += secondary.getUses() > 0 ? 1 : 0;
 

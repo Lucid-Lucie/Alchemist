@@ -3,13 +3,28 @@ package lucie.alchemist.enchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 
 public class EnchantmentBrewing extends Enchantment
 {
     public EnchantmentBrewing()
     {
-        super(Rarity.UNCOMMON, EnchantmentType.WEAPON, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
+        super(Rarity.UNCOMMON, EnchantmentType.BREAKABLE, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
         setRegistryName("brewing");
+    }
+
+    @Override
+    public boolean canApply(ItemStack stack)
+    {
+        return stack.getItem() instanceof SwordItem || stack.getItem() instanceof AxeItem;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack)
+    {
+        return canApply(stack);
     }
 
     @Override

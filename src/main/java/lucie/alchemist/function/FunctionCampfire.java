@@ -1,7 +1,6 @@
 package lucie.alchemist.function;
 
 import lucie.alchemist.Alchemist;
-import lucie.alchemist.utility.UtilityCompound;
 import lucie.alchemist.utility.UtilityGetter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -9,12 +8,13 @@ import net.minecraft.block.CampfireBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.PotionItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,17 +30,33 @@ public class FunctionCampfire
     @SubscribeEvent
     public static void playerInteract(PlayerInteractEvent.RightClickBlock event)
     {
-        /*
-        Alchemist.LOGGER.info(event.getPlayer().getHeldItem(Hand.MAIN_HAND));
-        Alchemist.LOGGER.info(event.getPlayer().getHeldItem(Hand.OFF_HAND));
-        Alchemist.LOGGER.info(event.getWorld().getBlockState(event.getPos()).getBlock());
-        */
-
         ItemStack tool = event.getPlayer().getHeldItem(Hand.MAIN_HAND);
         ItemStack potion = event.getPlayer().getHeldItem(Hand.OFF_HAND);
         BlockState state = event.getWorld().getBlockState(event.getPos());
 
-        int brewing = EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantment.BREWING, tool);
+        int brewing = EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantments.BREWING, tool);
+
+        // Check if cleaning item.
+        if (checkCleaning(state, potion, tool))
+        {
+            if (!event.getWorld().isRemote)
+            {
+                if (tool.getTag() != null) tool.getTag().remove("potion");
+                event.getPlayer().setHeldItem(Hand.MAIN_HAND, tool);
+                event.getPlayer().setHeldItem(Hand.OFF_HAND, new ItemStack(Items.GLASS_BOTTLE));
+                if (new Random().nextInt(5) == 0) event.getWorld().setBlockState(event.getPos(), state.getBlock().getDefaultState().with(CampfireBlock.LIT, false).with(CampfireBlock.FACING, state.get(CampfireBlock.FACING)));
+            }
+            else
+            {
+                event.getPlayer().playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 1.0F, 1.0F);
+                event.getPlayer().playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 0.5F, 1.0F);
+            }
+
+            event.setCancellationResult(ActionResultType.SUCCESS);
+            event.setCanceled(true);
+
+            return;
+        }
 
         // Check for tool, campfire, and potion.
         if (!checkTool(tool) || !checkCampfire(state)|| !potion.getItem().equals(Items.POTION)) return;
@@ -59,9 +75,9 @@ public class FunctionCampfire
 
         if (!event.getWorld().isRemote)
         {
-            int duration = instance.getDuration() == 1 ? 1 : instance.getDuration() / 10;
+            int duration = instance.getDuration();
             int amplifier = instance.getAmplifier();
-            int uses = getUses(EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantment.PROFICIENCY, tool));
+            int uses = getUses(EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantments.PROFICIENCY, tool));
 
             CompoundNBT nbt = new CompoundNBT();
             nbt.putInt("uses", uses);
@@ -89,14 +105,28 @@ public class FunctionCampfire
 
             Alchemist.LOGGER.info(tool.getTag());
         }
+        else
+        {
+            event.getPlayer().playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 1.0F, 1.0F);
+            event.getPlayer().playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 0.5F, 1.0F);
+        }
 
         event.setCancellationResult(ActionResultType.SUCCESS);
         event.setCanceled(true);
     }
 
+    private static boolean checkCleaning(BlockState state, ItemStack potion, ItemStack tool)
+    {
+        if (tool.getTag() == null || !tool.getTag().contains("potion")) return false;
+
+        if (!potion.getItem().equals(Items.POTION) || !PotionUtils.getPotionFromItem(potion).equals(Potions.WATER)) return false;
+
+        return checkCampfire(state);
+    }
+
     private static boolean checkTool(ItemStack tool)
     {
-        return tool.getMaxDamage() != 0 && EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantment.BREWING, tool) > 0;
+        return tool.getMaxDamage() != 0 && EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantments.BREWING, tool) > 0;
     }
 
     private static boolean checkCampfire(BlockState state)
