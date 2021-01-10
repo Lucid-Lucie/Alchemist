@@ -4,12 +4,12 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class EnchantmentProficiency extends Enchantment
+public class EnchantmentBrewing extends Enchantment
 {
-    public EnchantmentProficiency()
+    public EnchantmentBrewing()
     {
-        super(Rarity.RARE, EnchantmentType.WEAPON, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
-        setRegistryName("proficiency");
+        super(Rarity.UNCOMMON, EnchantmentType.WEAPON, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND});
+        setRegistryName("brewing");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class EnchantmentProficiency extends Enchantment
     @Override
     public int getMaxLevel()
     {
-        return 3;
+        return 2;
     }
 
     @Override

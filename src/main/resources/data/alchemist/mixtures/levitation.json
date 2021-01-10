@@ -1,6 +1,0 @@
-{
-  "effect": "minecraft:levitation",
-  "durations": [100, 200, 300],
-  "amplifiers": [0],
-  "uses": [16, 32]
-}

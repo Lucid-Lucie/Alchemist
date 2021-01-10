@@ -1,14 +1,12 @@
 package lucie.alchemist.function;
 
+import lucie.alchemist.utility.UtilityCompound;
 import lucie.alchemist.utility.UtilityGetter;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lucie.alchemist.utility.UtilityCompound.Tool;
+import static lucie.alchemist.utility.UtilityCompound.*;
 
 @Mod.EventBusSubscriber(modid = "alchemist")
 public class FunctionEffect
@@ -30,10 +28,9 @@ public class FunctionEffect
         // Get entity, currently held item, and list of tools.
         LivingEntity entity = event.getEntityLiving();
         ItemStack stack = ((LivingEntity) event.getSource().getImmediateSource()).getHeldItem(((LivingEntity) event.getSource().getImmediateSource()).getActiveHand());
-        ITag<Item> tools = ItemTags.getCollection().get(new ResourceLocation("alchemist", "tools"));
 
         // Check of tool.
-        if (tools == null || !tools.contains(stack.getItem())) return;
+        if (EnchantmentHelper.getEnchantmentLevel(UtilityGetter.Enchantment.BREWING, stack) == 0) return;
 
         // Check for both primary and secondary slots.
         Tool primary = Tool.convert(stack, true);
@@ -47,30 +44,30 @@ public class FunctionEffect
             effects.add(e.getPotion());
         }
 
-        // Stack needs nbt and primary slot used by mixture.
+        // Stack needs nbt and primary slot used by potion.
         if (stack.getTag() == null || !primary.doesExist()) return;
 
-        // Apply primary mixture.
+        // Apply primary potion.
         if (primary.getUses() > 0)
         {
-            instance = UtilityGetter.getEffectInstance(new ResourceLocation(primary.getEffect()), primary.getDuration(), primary.getAmplifier());
-
+            instance = new EffectInstance(primary.getEffect(), primary.getDuration(), primary.getAmplifier());
+            
             if (!effects.contains(instance.getPotion()))
             {
                 entity.addPotionEffect(instance);
-                stack.getTag().getCompound("mixture").getCompound("primary").putInt("uses", primary.getUses() - 1);
+                stack.getTag().getCompound("potion").getCompound("primary").putInt("uses", primary.getUses() - 1);
             }
         }
 
-        // Apply secondary mixture.
+        // Apply secondary potion.
         if (secondary.getUses() > 0)
         {
-            instance = UtilityGetter.getEffectInstance(new ResourceLocation(secondary.getEffect()), secondary.getDuration(), secondary.getAmplifier());
+            instance = new EffectInstance(secondary.getEffect(), secondary.getDuration(), secondary.getAmplifier());
 
             if (!effects.contains(instance.getPotion()))
             {
                 entity.addPotionEffect(instance);
-                stack.getTag().getCompound("mixture").getCompound("secondary").putInt("uses", secondary.getUses() - 1);
+                stack.getTag().getCompound("potion").getCompound("secondary").putInt("uses", secondary.getUses() - 1);
             }
         }
     }

@@ -1,6 +1,0 @@
-{
-  "effect": "alchemist:soul_draining",
-  "durations": [100, 200, 300],
-  "amplifiers": [0, 1],
-  "uses": [16, 32, 64]
-}

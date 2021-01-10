@@ -1,53 +1,9 @@
 {
-  "_comment": "Creative Tab",
-  "itemGroup.alchemist.materials": "Alchemist's Materials",
-  "itemGroup.alchemist.mixtures": "Alchemist's Mixtures",
-
   "_comment": "Enchantments",
+  "enchantment.alchemist.brewing": "Brewing",
   "enchantment.alchemist.proficiency": "Proficiency",
-  "enchantment.alchemist.mastery": "Mastery",
-  "enchantment.alchemist.knowledge": "Knowledge",
 
-  "_comment": "Effects",
-  "effect.alchemist.soul_draining": "Soul Draining",
-  "effect.alchemist.life_taking": "Life Taking",
-  "effect.alchemist.thieving": "Thieving",
-  "effect.alchemist.displacement": "Displacement",
-
-  "_comment": "Blocks",
-  "block.alchemist.campfire": "Roaring Campfire",
-
-  "_comment": "Items",
-  "item.alchemist.pouch": "Alchemist's Pouch",
-  "item.alchemist.pestle": "Alchemist's Pestle",
-  "item.alchemist.mixture": "%s Mixture",
-  "item.alchemist.ingredient": "%s Ingredients",
-  "item.alchemist.stick": "Elderwood Stick",
-  "item.alchemist.essence": "Elderwood Essence",
-  "item.alchemist.leather": "Treated Leather",
-  "item.alchemist.seeds": "Elderwood Seeds",
-  "item.alchemist.ash": "Pile of Ash",
-
-  "_comment": "Journal",
-  "journal.alchemist.leather": "This leather treated by Elderwood Essence has some unique magical properties.",
-  "journal.alchemist.seeds": "The seeds of Elderwood has invasive magical properties as it adapts to anything.",
-  "journal.alchemist.essence": "The essence of Elderwood is a magical material that transforms nature around it.",
-  "journal.alchemist.stick": "A branch from a long forgotten Elderwood tree that once grew in a magical forrest.",
-  "journal.alchemist.pouch": "A pouch is better than a bottle as they aren't brittle but fluids may be a problem!",
-  "journal.alchemist.pestle": "The pestle is a great tool for alchemy but an even greater tool to mash potatoes!",
-  "journal.alchemist.mixture": "This may be my greatest mixture ever created though it may inflict fire damage!",
-  "journal.alchemist.ash": "A roaring fire isn't a good place to cook food as it burns anything that it touches.",
-
-  "_comment": "Title",
-  "title.alchemist.alchemy": "Alchemy Journal",
-  "title.alchemist.herbology": "Herbology Journal",
-  "title.alchemist.page": "pg.%s",
-
-  "_comment": "Tooltip",
-  "tooltip.alchemist.requires": "Requires",
-  "tooltip.alchemist.info": "Hold 'shift' for info.",
-  "tooltip.alchemist.mixtures": "Mixtures",
-
-  "_comment": "Description",
-  "description.alchemist.ingredients": "Contents needs to be pulverized with a pestle before it can be used."
+  "_comment": "Tooltips",
+  "tooltip.alchemist.info": "Hold 'Shift' for info.",
+  "tooltip.alchemist.potions": "Potions"
 }

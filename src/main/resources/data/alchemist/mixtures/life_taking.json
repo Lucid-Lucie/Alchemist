@@ -1,6 +1,0 @@
-{
-  "effect": "alchemist:life_taking",
-  "durations": [1],
-  "amplifiers": [0, 1],
-  "uses": [16, 32, 64]
-}

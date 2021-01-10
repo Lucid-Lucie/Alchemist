@@ -1,18 +1,14 @@
 package lucie.alchemist.utility;
 
 import lucie.alchemist.Alchemist;
-import lucie.alchemist.init.InitializeItems;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UtilityTooltip
@@ -36,63 +32,7 @@ public class UtilityTooltip
         tooltip.add(new StringTextComponent(""));
     }
 
-    // Adds Journal.
-    public void journal(InitializeItems.ItemType type, String name, int page)
-    {
-        if (!Screen.hasShiftDown()) return;
-
-        clear();
-        setColor(new String[]{I18n.format("title.alchemist." + type.getJournal()) + ": ", I18n.format("title.alchemist.page", page)}, new TextFormatting[]{type.getRarity().color, TextFormatting.WHITE});
-        setTrim("\"" + I18n.format("journal.alchemist." + name) + "\"", 3);
-    }
-
     /* Getters and Setters */
-
-    // Sets trimmed strings
-    public void setTrim(String localized, int rows)
-    {
-        tooltip.addAll(getTrim(localized, rows));
-    }
-
-    // Gets trimmed strings.
-    public List<StringTextComponent> getTrim(String localized, int rows)
-    {
-        rows = localized.length() / rows;
-
-        List<StringTextComponent> list = new ArrayList<>();
-        StringBuilder builder = new StringBuilder(); // String factory
-        Style style = Style.EMPTY.setFormatting(TextFormatting.GRAY).setItalic(true);
-        StringTextComponent s;
-
-        int size = 0;
-
-        for (int i = 0; i < localized.length(); i++)
-        {
-            char c = localized.charAt(i);
-
-            // If the size is greater than specified length / rows, clip the string.
-            if (c == ' ' && size >= rows)
-            {
-                s = new StringTextComponent(builder.toString());
-                s.setStyle(style);
-                list.add(s);
-
-                builder = new StringBuilder();
-                size = 0;
-                continue;
-            }
-
-            size += 1;
-            builder.append(c);
-        }
-
-        // Get last row of text.
-        s = new StringTextComponent(builder.toString());
-        s.setStyle(style);
-        list.add(s);
-
-        return list;
-    }
 
     // Sets specified colors to to text with index.
     public void setColor(String[] texts, TextFormatting[] formatting)
@@ -106,7 +46,7 @@ public class UtilityTooltip
         if (texts.length != formatting.length)
         {
             // Text need to have as many items as formatting.
-            Alchemist.LOGGER.error("colorTooltip mismatch! Texts: '" + texts.length + "', Formatting: '" + formatting.length + "'. Returning without formatting.");
+            Alchemist.LOGGER.error("getColor mismatch! Texts: '" + texts.length + "', Formatting: '" + formatting.length + "'. Returning without formatting.");
             return null;
         }
 
@@ -158,6 +98,11 @@ public class UtilityTooltip
                 case 3: amplifier = "III"; break;
                 case 4: amplifier = "IV"; break;
                 case 5: amplifier = "V"; break;
+                case 6: amplifier = "VI"; break;
+                case 7: amplifier = "VII"; break;
+                case 8: amplifier = "VIII"; break;
+                case 9: amplifier = "IX"; break;
+                case 10: amplifier = "X"; break;
                 default: amplifier = "?"; break;
             }
 
@@ -191,14 +136,14 @@ public class UtilityTooltip
         return component;
     }
 
-    // Sets mixture tooltip.
-    public void setMixture(EffectInstance effect, int uses, TextFormatting color)
+    // Sets potion tooltip.
+    public void setPotion(EffectInstance effect, int uses, TextFormatting color)
     {
-        tooltip.add(getMixture(effect, uses, color));
+        tooltip.add(getPotion(effect, uses, color));
     }
 
-    // Gets mixture tooltip.
-    public StringTextComponent getMixture(EffectInstance effect, int uses, TextFormatting color)
+    // Gets potion tooltip.
+    public StringTextComponent getPotion(EffectInstance effect, int uses, TextFormatting color)
     {
         StringTextComponent amount = getColor(new String[]{" " + uses}, new TextFormatting[]{color});
         StringTextComponent potion = getEffect(effect, color);
@@ -206,13 +151,13 @@ public class UtilityTooltip
         return amount;
     }
 
-    // Sets mixture count.
+    // Sets potion count.
     public void setCount(ItemStack stack, TextFormatting color, int count, int max)
     {
         tooltip.add(0, getCount(stack, color, count, max));
     }
 
-    // Gets mixture count.
+    // Gets potion count.
     public StringTextComponent getCount(ItemStack stack, TextFormatting color, int count, int max)
     {
         return getColor(new String[]{stack.getDisplayName().getString() + ": ", "[", String.valueOf(count), "/", String.valueOf(max), "]"}, new TextFormatting[]{color, TextFormatting.GRAY, TextFormatting.WHITE, TextFormatting.GRAY, TextFormatting.WHITE, TextFormatting.GRAY});
