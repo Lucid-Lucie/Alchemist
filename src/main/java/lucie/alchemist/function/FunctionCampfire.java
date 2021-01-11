@@ -64,6 +64,8 @@ public class FunctionCampfire
         Tool primary = Tool.convert(tool, true);
         Tool secondary = Tool.convert(tool, false);
 
+        if (PotionUtils.getEffectsFromStack(potion).isEmpty()) return;
+
         EffectInstance instance = PotionUtils.getEffectsFromStack(potion).get(0);
         String effect = Objects.requireNonNull(instance.getPotion().getRegistryName()).toString();
 

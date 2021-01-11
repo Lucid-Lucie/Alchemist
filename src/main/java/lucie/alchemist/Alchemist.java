@@ -65,8 +65,8 @@ public class Alchemist
             event.getRegistry().register(new PotionBase("thieving_long", new EffectInstance(Effects.THIEVING, 1800)));
             event.getRegistry().register(new PotionBase("thieving_strong", new EffectInstance(Effects.THIEVING, 420, 1)));
 
-            event.getRegistry().register(new PotionBase("levitation", new EffectInstance(net.minecraft.potion.Effects.LEVITATION, 1800)));
-            event.getRegistry().register(new PotionBase("levitation_long", new EffectInstance(net.minecraft.potion.Effects.LEVITATION, 4800)));
+            event.getRegistry().register(new PotionBase("levitation", new EffectInstance(net.minecraft.potion.Effects.LEVITATION, 200)));
+            event.getRegistry().register(new PotionBase("levitation_long", new EffectInstance(net.minecraft.potion.Effects.LEVITATION, 400)));
         }
 
         @SubscribeEvent
