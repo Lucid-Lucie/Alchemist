@@ -1,20 +1,19 @@
-# Alchemist's Combat
+# Alchemist's Combat 2
 
-Alchemist's Combat bring a new type of potion into the arsenal, mixtures.
-Mixtures can be put on Swords and when fighting it will inflict potion effects on its target.
+*A rework of Alchemist's Combat.*
 
-The mod comes with new potion effects that is well suited for using in battle.
-Slowness and levitation are available as mixtures, but the new ones are:
+**How to get started.**
+This mod brings potions to your swords and axes to aid in the endless war against vile creatures. To bring potions upon your sword or axe you will need a new enchantment called brewing.  With the new enchantment active you can put a potion of your choice in the off hand and your tool in your main hand and then right click a campfire to apply the potion effect on to your tool. This works on both normal campfire and soul campfire.
 
-- **Soul Draining:** Works like the poison effect but works on both dead and undead creatures.
-- **Life Taking:** Works like instant damage but works on both dead and undead creatures.
-- **Cursed Greed:** Makes the effected creature to drop emeralds.
-- **Armor Teleportation:** Makes the effected creature drop their armor.
+**Two new enchantments can be found on swords and axes:**
 
-Three new enchants have also been added, they are:
+* **Brewing: **This enchantment actually makes it possible to have potions applied to your tools. **Brewing I** lets you have 1 active potion while **Brewing II** lets you have two active potions at the same time.
+* **Proficiency: **When you apply a potion to your tool it will have an amount of uses with default being 16 uses per potion. **Proficiency** makes the amount of uses higher and with a **Proficiency III** enchantment and a bit of luck you can get a maximum of 64 uses per potion.
 
-* **Knowledge:** Allows one extra mixture to be put on. (Swords) (Treasure Enchantment)
-* **Proficiency 1-3:** Better luck when pulverizing ingredients (Pestle)
-* **Mastery:** Gives maximal luck when pulverizing ingredients (Pestle) 
+**The mod also comes with new potion effects which are:**
 
-To get started you just need to break grass and get the new materials.
+* **Thieving:** Drops Emeralds from Villages and Illagers, also drops golden items from Piglins and Zombified Piglins. (*Brewed with a Golden Apple*)
+* **Displacement:** Affected mob has a chance to drop armor and held items. (*Brewed with an Ender Pearl*)
+* **Soul Draining:** Works like poison but works on all mobs. (*Brewed with a Soul Sand*)
+* **Life Taking:** Works like instant damage but works on all mobs. (*Brewed with a Poppy*)
+* **Levitation:** Not new but now has a recipe. (*Brewed by having a Fermented Spider Eye on Potions of Slow Falling*)
