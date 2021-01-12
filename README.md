@@ -7,8 +7,8 @@ This mod brings potions to your swords and axes to aid in the endless war agains
 
 **Two new enchantments can be found on swords and axes:**
 
-* **Brewing: **This enchantment actually makes it possible to have potions applied to your tools. **Brewing I** lets you have 1 active potion while **Brewing II** lets you have two active potions at the same time.
-* **Proficiency: **When you apply a potion to your tool it will have an amount of uses with default being 16 uses per potion. **Proficiency** makes the amount of uses higher and with a **Proficiency III** enchantment and a bit of luck you can get a maximum of 64 uses per potion.
+* **Brewing:** This enchantment actually makes it possible to have potions applied to your tools. **Brewing I** lets you have 1 active potion while **Brewing II** lets you have two active potions at the same time.
+* **Proficiency:** When you apply a potion to your tool it will have an amount of uses with default being 16 uses per potion. **Proficiency** makes the amount of uses higher and with a **Proficiency III** enchantment and a bit of luck you can get a maximum of 64 uses per potion.
 
 **The mod also comes with new potion effects which are:**
 
