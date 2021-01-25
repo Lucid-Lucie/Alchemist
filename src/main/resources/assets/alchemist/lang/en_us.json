@@ -66,6 +66,10 @@
   "enchantment.alchemist.proficiency": "Proficiency",
 
   "_comment": "Tooltips",
-  "tooltip.alchemist.info": "Hold 'Shift' for info.",
-  "tooltip.alchemist.potions": "Potions"
+  "tooltip.alchemist.info": "Hold 'Shift' & '%s' for info.",
+  "tooltip.alchemist.potions": "Potions",
+
+  "_comment": "Keybinds",
+  "keybind.alchemist.category": "Alchemist's Combat",
+  "keybind.alchemist.info": "Potion description"
 }

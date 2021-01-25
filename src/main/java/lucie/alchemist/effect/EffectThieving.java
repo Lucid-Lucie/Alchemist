@@ -1,28 +1,29 @@
 package lucie.alchemist.effect;
 
-import net.minecraft.entity.Entity;
+import lucie.alchemist.Alchemist;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootTable;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EffectThieving extends Effect
 {
-    private static final List<EntityType<?>> EMERALD = new ArrayList<>(Arrays.asList(EntityType.VILLAGER, EntityType.PILLAGER, EntityType.WITCH, EntityType.EVOKER, EntityType.VINDICATOR, EntityType.ILLUSIONER, EntityType.WANDERING_TRADER, EntityType.ZOMBIE_VILLAGER));
-
-    private static final List<EntityType<?>> GOLD = new ArrayList<>(Arrays.asList(EntityType.PIGLIN, EntityType.ZOMBIFIED_PIGLIN));
-
-    private static final List<Item> ITEMS = new ArrayList<>(Arrays.asList(Items.GOLDEN_CARROT, Items.GOLD_NUGGET, Items.GOLD_INGOT, Items.GOLDEN_HORSE_ARMOR, Items.GOLDEN_APPLE));
+    public static HashMap<ResourceLocation, ResourceLocation> THIEVING = new HashMap<>();
 
     public EffectThieving()
     {
@@ -31,33 +32,40 @@ public class EffectThieving extends Effect
     }
 
     @Override
-    public void performEffect(LivingEntity entityLivingBaseIn, int amplifier)
+    public void performEffect(@Nonnull LivingEntity entityLivingBaseIn, int amplifier)
     {
-        ItemStack stack = null;
+        if (entityLivingBaseIn.world.isRemote || EffectThieving.THIEVING.isEmpty()) return;
+        EntityType<?> type = entityLivingBaseIn.getType();
+        ITag<EntityType<?>> tag;
 
-        if (EMERALD.contains(entityLivingBaseIn.getType()))
+        for (Map.Entry<ResourceLocation, ResourceLocation> map : EffectThieving.THIEVING.entrySet())
         {
-            stack = new ItemStack(Items.EMERALD);
-        }
+            tag = EntityTypeTags.getCollection().get(map.getKey());
+            if (tag == null)
+            {
+                Alchemist.LOGGER.warn("Couldn't find entity tag '" + map.getKey() + "'");
+                continue;
+            }
 
-        if (GOLD.contains(entityLivingBaseIn.getType()))
-        {
-            stack = new ItemStack(ITEMS.get(new Random().nextInt(ITEMS.size())));
-        }
+            if (tag.contains(type))
+            {
+                LootTable table = ServerLifecycleHooks.getCurrentServer().getLootTableManager().getLootTableFromLocation(map.getValue());
+                LootContext.Builder builder = new LootContext.Builder((ServerWorld) entityLivingBaseIn.world);
+                ItemEntity item;
 
-        if (!entityLivingBaseIn.getEntityWorld().isRemote && stack != null)
-        {
-            ItemEntity item = new ItemEntity(entityLivingBaseIn.getEntityWorld(), entityLivingBaseIn.getPosX(), entityLivingBaseIn.getPosY(), entityLivingBaseIn.getPosZ(), stack);
+                for (ItemStack stack : table.generate(builder.build(LootParameterSets.EMPTY)))
+                {
+                    double angle = Math.random()*Math.PI*2;
 
-            double angle = Math.random()*Math.PI*2;
+                    item = new ItemEntity(entityLivingBaseIn.getEntityWorld(), entityLivingBaseIn.getPosX(), entityLivingBaseIn.getPosY(), entityLivingBaseIn.getPosZ(), stack);
+                    item.setMotion(Math.cos(angle)*0.15, 0.3, Math.sin(angle)*0.15);
+                    item.setPickupDelay(20);
 
-            item.setVelocity(Math.cos(angle)*0.15, 0.3, Math.sin(angle)*0.15);
+                    entityLivingBaseIn.world.addEntity(item);
+                }
 
-            item.setPickupDelay(20);
-
-            entityLivingBaseIn.world.addEntity(item);
-
-            entityLivingBaseIn.attackEntityFrom(DamageSource.MAGIC, 1.0F);
+                entityLivingBaseIn.attackEntityFrom(DamageSource.MAGIC, 1.0F);
+            }
         }
     }
 

@@ -9,31 +9,42 @@ import lucie.alchemist.enchantment.EnchantmentBrewing;
 import lucie.alchemist.enchantment.EnchantmentProficiency;
 import lucie.alchemist.potion.PotionBase;
 import lucie.alchemist.utility.UtilityGetter.Effects;
+import lucie.alchemist.utility.UtilityKeybind;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.SwordItem;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod("alchemist")
 public class Alchemist
 {
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getFormatterLogger("Alchemist's Combat");
+
+    public static final String VERSION = "2.1.0";
+
+    public static SimpleChannel network;
 
     public Alchemist()
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+    }
+
+    private void clientSetup(final FMLClientSetupEvent event)
+    {
+        if (FMLEnvironment.dist.isClient()) ClientRegistry.registerKeyBinding(UtilityKeybind.INFO);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
