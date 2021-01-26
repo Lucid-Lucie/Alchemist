@@ -1,6 +1,4 @@
-```
-![](src/main/resources/logo.png)
-```
+![](https://github.com/Lucid-Lucie/Alchemist/blob/main/src/main/resources/logo.png)
 
 # Alchemist's Combat
 
