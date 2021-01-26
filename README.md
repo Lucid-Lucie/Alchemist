@@ -1,19 +1,33 @@
-# Alchemist's Combat 2
+```
+![](src/main/resources/logo.png)
+```
 
-*A rework of Alchemist's Combat.*
+# Alchemist's Combat
 
-**How to get started.**
-This mod brings potions to your swords and axes to aid in the endless war against vile creatures. To bring potions upon your sword or axe you will need a new enchantment called brewing.  With the new enchantment active you can put a potion of your choice in the off hand and your tool in your main hand and then right click a campfire to apply the potion effect on to your tool. This works on both normal campfire and soul campfire.
+*Apply potions to weaponry!*
 
-**Two new enchantments can be found on swords and axes:**
+## Enchantments
 
-* **Brewing:** This enchantment actually makes it possible to have potions applied to your tools. **Brewing I** lets you have 1 active potion while **Brewing II** lets you have two active potions at the same time.
-* **Proficiency:** When you apply a potion to your tool it will have an amount of uses with default being 16 uses per potion. **Proficiency** makes the amount of uses higher and with a **Proficiency III** enchantment and a bit of luck you can get a maximum of 64 uses per potion.
+New enchantments has been seen on swords and axes. ***Brewing*** is a powerful enchantment that lets you put potions on your swords and axes, the level of the enchantment determines how many potions you can apply to your weapon. ***Proficiency*** enhances the skill of applying potions, the greater the enchantment the more uses you will get out of your applied potion.
 
-**The mod also comes with new potion effects which are:**
+## Effects
 
-* **Thieving:** Drops Emeralds from Villages and Illagers, also drops golden items from Piglins and Zombified Piglins. (*Brewed with a Golden Apple*)
-* **Displacement:** Affected mob has a chance to drop armor and held items. (*Brewed with an Ender Pearl*)
-* **Soul Draining:** Works like poison but works on all mobs. (*Brewed with a Soul Sand*)
-* **Life Taking:** Works like instant damage but works on all mobs. (*Brewed with a Poppy*)
-* **Levitation:** Not new but now has a recipe. (*Brewed by having a Fermented Spider Eye on Potions of Slow Falling*)
+New mob effects can also be brewed in this mod. ***Life Taking*** works like instant damage but wounds all mobs alive and undead. ***Soul Draining*** also works on all mobs and is similar to the poison effect. ***Thieving*** can make Illagers and Piglins drop some of their valued loot that they are carrying. ***Displacement*** can teleport away armor from the creature that has been affected by it.
+
+## Campfires
+
+There has come a new use of campfires in this mod. To apply a potion to your weapon of choice you need a weapon in your main hand that is enchanted with at least the first tier of brewing, a potion of your choice in the off hand, and a lit campfire to combine it all. If you venture out in the nether do notice that a soul campfire will bring more uses than your ordinary campfire.
+
+## Datapacks
+
+The weaponry that can apply the brewing enchantment is customizable using item tags in a datapack. The Thieving potion effect is also configurable using datapacks.
+
+## Recipes
+
+The way to gather the new potions will be changed in a future update, but as of now the recipes are as follows.
+
+* **Thieving:** Golden Apple with Awkward potion.
+* **Displacement:** Ender Pearl with Awkward potion.
+* **Life Taking:** Poppy with Awkward Potion.
+* **Soul Draining: ** Soul Sand with Awkward Potion.
+* **Levitation:** Fermented Spider Eye with Potion of Slow Falling.

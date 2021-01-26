@@ -1,11 +1,12 @@
 modLoader="javafml"
 loaderVersion="[35,)"
 license="DBAD v1.1"
+logoFile="logo.png"
+credits="Gamedesign: Cardigan, Bug Testing: Akitori."
+authors="Lucie"
 
 [[mods]]
 modId="alchemist"
 version="1.16.4-2.1.0"
 displayName="Alchemist's Combat"
-credits="Gamedesign: Cardigan, Bug Testing: Akitori."
-authors="Lucie"
-description="Alchemist's Combat 2 makes it possible to put potions on weaponry."
+description="Alchemist's Combat makes it possible to put potions on weaponry."

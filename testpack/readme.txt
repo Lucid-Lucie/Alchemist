@@ -1,0 +1,1 @@
+This is a test datapack that shows how to add new applicable tools and thieving effects.

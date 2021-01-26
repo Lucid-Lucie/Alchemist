@@ -41,6 +41,7 @@ public class EffectThieving extends Effect
         for (Map.Entry<ResourceLocation, ResourceLocation> map : EffectThieving.THIEVING.entrySet())
         {
             tag = EntityTypeTags.getCollection().get(map.getKey());
+
             if (tag == null)
             {
                 Alchemist.LOGGER.warn("Couldn't find entity tag '" + map.getKey() + "'");

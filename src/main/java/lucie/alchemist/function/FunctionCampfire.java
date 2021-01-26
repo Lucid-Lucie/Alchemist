@@ -1,13 +1,18 @@
 package lucie.alchemist.function;
 
+import lucie.alchemist.particle.AlchemistParticles;
+import lucie.alchemist.particle.ParticleEffect;
 import lucie.alchemist.utility.UtilityEffect;
 import lucie.alchemist.utility.UtilityGetter;
+import lucie.alchemist.utility.UtilityParticle;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
@@ -38,10 +43,10 @@ public class FunctionCampfire
         CampfireType campfire = CampfireType.getCampfire(state);
         ITag<Item> tag = ItemTags.getCollection().get(new ResourceLocation("alchemist:applicable_weapons"));
 
-        System.out.println(campfire);
-
         // Check if block is campfire, tool is in tags, and potion is potion and hand is right hand.
         if (campfire == null || !potion.getItem().equals(Items.POTION) || event.getHand() == Hand.OFF_HAND || tag == null || !tag.contains(tool.getItem())) return;
+
+        BasicParticleType type = campfire.getType();
 
         if (PotionUtils.getPotionFromItem(potion).equals(Potions.WATER) && UtilityEffect.hasEffect(tool))
         {
@@ -49,6 +54,7 @@ public class FunctionCampfire
             UtilityEffect.purgeEffects(tool);
             event.getPlayer().setHeldItem(Hand.MAIN_HAND, tool);
             event.getPlayer().setHeldItem(Hand.OFF_HAND, new ItemStack(Items.GLASS_BOTTLE));
+            type = ParticleTypes.SMOKE;
         }
         else
         {
@@ -77,6 +83,7 @@ public class FunctionCampfire
         else
         {
             // Client side stuff.
+            UtilityParticle.spawnParticles(type, event.getWorld(), event.getPos());
             event.getPlayer().playSound(SoundEvents.ITEM_BOTTLE_EMPTY, 1.0F, 1.0F);
             event.getPlayer().playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 0.5F, 1.0F);
         }
@@ -87,14 +94,16 @@ public class FunctionCampfire
 
     private enum CampfireType
     {
-        CAMPFIRE(16),
-        SOUL_CAMPFIRE(24);
+        CAMPFIRE(16, AlchemistParticles.CAMPFIRE),
+        SOUL_CAMPFIRE(24, AlchemistParticles.SOUL_CAMPFIRE);
 
         private int multiplier;
+        private BasicParticleType type;
 
-        CampfireType(int multiplier)
+        CampfireType(int multiplier, BasicParticleType type)
         {
             this.multiplier = multiplier;
+            this.type = type;
         }
 
         @Nullable
@@ -109,6 +118,11 @@ public class FunctionCampfire
         public int getMultiplier()
         {
             return multiplier;
+        }
+
+        public BasicParticleType getType()
+        {
+            return type;
         }
     }
 }

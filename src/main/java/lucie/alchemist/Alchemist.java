@@ -7,13 +7,20 @@ import lucie.alchemist.effect.EffectSoulDraining;
 import lucie.alchemist.effect.EffectThieving;
 import lucie.alchemist.enchantment.EnchantmentBrewing;
 import lucie.alchemist.enchantment.EnchantmentProficiency;
+import lucie.alchemist.particle.AlchemistParticles;
+import lucie.alchemist.particle.ParticleEffect;
 import lucie.alchemist.potion.PotionBase;
 import lucie.alchemist.utility.UtilityGetter.Effects;
 import lucie.alchemist.utility.UtilityKeybind;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,7 +30,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,10 +37,6 @@ import org.apache.logging.log4j.Logger;
 public class Alchemist
 {
     public static final Logger LOGGER = LogManager.getFormatterLogger("Alchemist's Combat");
-
-    public static final String VERSION = "2.1.0";
-
-    public static SimpleChannel network;
 
     public Alchemist()
     {
@@ -90,10 +92,29 @@ public class Alchemist
         }
 
         @SubscribeEvent
+        public static void onParticlesRegistry(RegistryEvent.Register<ParticleType<?>> event)
+        {
+            event.getRegistry().register(new BasicParticleType(false).setRegistryName("campfire"));
+            event.getRegistry().register(new BasicParticleType(false).setRegistryName("soul_campfire"));
+        }
+
+        @SubscribeEvent
         public static void onEnchantmentsRegistry(RegistryEvent.Register<Enchantment> event)
         {
             event.getRegistry().register(new EnchantmentBrewing());
             event.getRegistry().register(new EnchantmentProficiency());
+        }
+    }
+
+
+    @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = "alchemist", bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ClientRegistryEvents
+    {
+        @SubscribeEvent
+        public static void onFactoriesRegistry(ParticleFactoryRegisterEvent event)
+        {
+            Minecraft.getInstance().particles.registerFactory(AlchemistParticles.CAMPFIRE, ParticleEffect.Factory::new);
+            Minecraft.getInstance().particles.registerFactory(AlchemistParticles.SOUL_CAMPFIRE, ParticleEffect.Factory::new);
         }
     }
 }

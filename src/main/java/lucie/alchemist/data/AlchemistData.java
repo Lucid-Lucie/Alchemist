@@ -40,7 +40,6 @@ public class AlchemistData extends JsonReloadListener
         }
 
         Alchemist.LOGGER.info("Loading Alchemist's Combat Data: Potions");
-
         DataThieving thieving;
 
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet())
