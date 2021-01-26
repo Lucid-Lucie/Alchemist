@@ -27,5 +27,5 @@ The way to gather the new potions will be changed in a future update, but as of 
 * **Thieving:** Golden Apple with Awkward potion.
 * **Displacement:** Ender Pearl with Awkward potion.
 * **Life Taking:** Poppy with Awkward Potion.
-* **Soul Draining: ** Soul Sand with Awkward Potion.
+* **Soul Draining:** Soul Sand with Awkward Potion.
 * **Levitation:** Fermented Spider Eye with Potion of Slow Falling.
