@@ -16,7 +16,7 @@ public class EffectSoulDraining extends Effect
     @Override
     public void performEffect(LivingEntity entityLivingBaseIn, int amplifier)
     {
-        if (entityLivingBaseIn.getHealth() > 1.0F)
+        if (entityLivingBaseIn.getHealth() > 0.0F)
         {
             entityLivingBaseIn.attackEntityFrom(DamageSource.MAGIC, 1.0F);
         }

@@ -4,12 +4,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
+import net.minecraft.potion.InstantEffect;
 import net.minecraft.util.DamageSource;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EffectLifeTaking extends Effect
+public class EffectLifeTaking extends InstantEffect
 {
     public EffectLifeTaking()
     {
@@ -26,6 +27,7 @@ public class EffectLifeTaking extends Effect
     @Override
     public void affectEntity(@Nullable Entity source, @Nullable Entity indirectSource, @Nonnull LivingEntity entityLivingBaseIn, int amplifier, double health)
     {
+        System.out.println("test");
         int j = (int)(health * (double)(6 << amplifier) + 0.5D);
 
         if (source == null)
